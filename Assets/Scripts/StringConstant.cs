@@ -1,5 +1,15 @@
-public static class StringConstant 
+/// <summary>
+/// Static class that holds string constants used throughout the game for common status messages or events.
+/// </summary>
+public static class StringConstant
 {
-    public static readonly string Key = "Key";
-    public static readonly string Finish = "Finish";
+    /// <summary>
+    /// Represents the "Win" status, used when the player wins the game.
+    /// </summary>
+    public static readonly string Win = "Win";
+
+    /// <summary>
+    /// Represents the "Loose" status, used when the player loses the game.
+    /// </summary>
+    public static readonly string Loose = "Loose";
 }
