@@ -1,5 +1,3 @@
-using CustomEventBus;
-using CustomEventBus.Signals;
 using UnityEngine;
 
 namespace Obstacle
@@ -15,9 +13,9 @@ namespace Obstacle
         /// Triggers the game end event with a "Loose" signal.
         /// </summary>
         /// <param name="eventBus">The EventBus used to invoke events.</param>
-        public void Touch(EventBus eventBus)
+        public void Touch()
         {
-            eventBus?.Invoke(new OnGameEnd(StringConstant.Loose)); // Trigger game end event
+           
         }
     }
 }

@@ -1,4 +1,3 @@
-using CustomEventBus;
 using UnityEngine;
 
 namespace Player
@@ -9,15 +8,13 @@ namespace Player
     /// </summary>
     public class PlayerTouch : MonoBehaviour
     {
-        private EventBus _eventBus;
 
         /// <summary>
         /// Initializes the PlayerTouch component with an instance of the EventBus.
         /// </summary>
         /// <param name="eventBus">The EventBus used for broadcasting touch events.</param>
-        public void Init(EventBus eventBus)
+        public void Init()
         {
-            _eventBus = eventBus;
         }
 
         /// <summary>
@@ -30,7 +27,7 @@ namespace Player
             if (other.gameObject.TryGetComponent(out ITouching touch))
             {
                 // Calls the Touch method of the object, passing in the EventBus for event handling.
-                touch.Touch(_eventBus);
+
             }
         }
     }

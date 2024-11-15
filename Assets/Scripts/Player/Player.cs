@@ -1,90 +1,68 @@
-using CustomEventBus;
-using CustomEventBus.Signals;
 using UnityEngine;
+using Character;
+using UserController;
 
 namespace Player
 {
-    /// <summary>
-    /// Manages player input, movement, and interactions in the game.
-    /// Implements IService for service locator pattern integration.
-    /// </summary>
-    public class PlayerController : MonoBehaviour, IService
+    public class PlayerController : MonoBehaviour
     {
-        private const string Mouse_X = "Mouse X";
-        private const string Mouse_Y = "Mouse Y";
-        private const string Vertical = "Vertical";
-        private const string Horizontal = "Horizontal";
-
-        private EventBus _eventBus;
-
-        private float _mouseX = 0f;
-        private float _mouseY = 0f;
-        private float _vertical = 0f;
-        private float _horizontal = 0f;
-
-        private PlayerMovement _playerMovement;
-        private PlayerTouch _playerTouch;
+        private CharacterController _characterController;
+        private Camera _camera;
+        private AudioSettings _audioSettings;
+        
         private IFootstepHandler _footstepHandler;
+        private IMovement _movement;
+        private IUserController _userController;
+        
+        [SerializeField] private AudioSource audioSource;           
+        [SerializeField] private AudioClip[] footstepClips;          
+        [SerializeField] private float footstepInterval = 0.5f;
 
-        [SerializeField] private AudioSource _audioSource;             // Audio source for footstep sounds
-        [SerializeField] private AudioClip[] _footstepClips;           // Array of footstep audio clips
-        [SerializeField] private float _footstepInterval = 0.5f;       // Time interval between footstep sounds
-
-        /// <summary>
-        /// Initializes the PlayerController by acquiring necessary components and initializing dependencies.
-        /// </summary>
+        [SerializeField] private float maxClamp = 60;
+        [SerializeField] private float speedScale = 5f;
+        [SerializeField] private float turnSpeed = 250f;
+        [SerializeField] private float accelerationRate = 2f;
+        
+        public void Inject(DependencyContainer container)
+        {
+            _camera = Camera.main;
+            _characterController = GetComponent<CharacterController>();
+            _userController = container.Resolve<IUserController>();
+            _audioSettings = container.Resolve<AudioSettings>();
+            
+            _movement = new CharacterMovement(maxClamp, speedScale, accelerationRate, turnSpeed);
+            _footstepHandler = new FootstepHandler(audioSource, _audioSettings);
+            
+        }
+        
         public void Init()
         {
-            _eventBus = ServiceLocator.Current.Get<EventBus>();
-
-            _playerMovement = GetComponent<PlayerMovement>();
-            _playerTouch = GetComponent<PlayerTouch>();
-
-            _playerTouch.Init(_eventBus);
-            _playerMovement.Init();
-
-            _footstepHandler = new FootstepHandler(_audioSource, _footstepClips, _footstepInterval);
+            Cursor.lockState = CursorLockMode.Locked;
         }
-
-        /// <summary>
-        /// Updates the player state each frame, handling input and invoking actions accordingly.
-        /// </summary>
-        void Update()
+        
+        private void Update()
         {
-            // Check for pause input
-            if (Input.GetKeyDown(KeyCode.Escape))
-                _eventBus?.Invoke(new OnGamePause());
+            var lookX = _userController.GetLookDirectionX();
+            var lookY = _userController.GetLookDirectionY();
+            var moveVertical = _userController.GetMoveDirectionVertical();
+            var moveHorizontal = _userController.GetMoveDirectionHorizontal();
 
-            // Gather input values
-            _mouseX = Input.GetAxis(Mouse_X);
-            _mouseY = Input.GetAxis(Mouse_Y);
-            _vertical = Input.GetAxis(Vertical);
-            _horizontal = Input.GetAxis(Horizontal);
+            _movement.RotateCharacter(lookX, lookY, transform, _camera.transform);
+            var velocity =_movement.MoveCharacter(moveHorizontal, moveVertical, transform);
+            var gravityVelocity = _movement.AddGravity();
 
-            // Manage acceleration based on shift key state
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-                _playerMovement.AddAcseleration();
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-                _playerMovement.SubAcseleration();
+            _characterController.Move(_characterController.isGrounded ? velocity : (Vector3)gravityVelocity);
 
-            // Rotate and move the player
-            _playerMovement.RotatePlayer(_mouseX, _mouseY);
-            _playerMovement.MoveCharacter(_horizontal, _vertical);
-
-            // Play footstep sound if the player is moving
-            if (IsMoving())
+            if (IsMoving(velocity))
             {
                 _footstepHandler.PlayFootstepSound();
             }
         }
 
-        /// <summary>
-        /// Determines if the player is currently moving based on input.
-        /// </summary>
-        /// <returns>True if the player is moving; otherwise, false.</returns>
-        private bool IsMoving()
+        private bool IsMoving(Vector3 velocity)
         {
-            return Mathf.Abs(_horizontal) > 0.1f || Mathf.Abs(_vertical) > 0.1f;
+            var velocityMagnitude = new Vector3(velocity.x, 0, velocity.z).magnitude;
+            return velocityMagnitude > 0.01f;
         }
     }
 }

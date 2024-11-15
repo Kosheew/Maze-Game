@@ -22,7 +22,7 @@ namespace Obstacle
         private void Start()
         {
             m_rb.isKinematic = true; // Set the Rigidbody to kinematic at the start.
-            _audioManager = ServiceLocator.Current.Get<AudioManager>();
+         
         }
 
         /// <summary>

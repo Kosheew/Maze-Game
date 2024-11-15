@@ -1,12 +1,12 @@
-namespace Character.Command
+﻿namespace Character.Command
 {
-    public class AttackCommand : ICommand
+    public class IdleCommand: ICommand
     {
         private readonly StateManager _stateManager;
         private readonly StateFactory _stateFactory;
         private readonly ICharacter _character;
         
-        public AttackCommand(DependencyContainer container, ICharacter character)
+        public IdleCommand(DependencyContainer container, ICharacter character)
         {
             _stateManager = container.Resolve<StateManager>();
             _stateFactory = container.Resolve<StateFactory>();
@@ -15,7 +15,7 @@ namespace Character.Command
 
         public void Execute()
         {
-            var characterState = _stateFactory.CreateState(TypeCharacterStates.Attacked);
+            var characterState = _stateFactory.CreateState(TypeCharacterStates.Idle);
             _stateManager.SetState(characterState, _character);
         }
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace InitGame.Audio
 {
-    public class AudioManager : MonoBehaviour, IService
+    public class AudioManager : MonoBehaviour
     {
         private AudioSource _audioSource; 
 
