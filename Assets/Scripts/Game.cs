@@ -1,7 +1,7 @@
 using Enemy;
 using InitGame.Audio;
 using InitGame.Level;
-using Player;
+using Character;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UserController;
@@ -12,7 +12,7 @@ public class Game : MonoBehaviour
     [SerializeField] private UserInterface userInterface;
         
     [Header("Player Settings")]
-    [SerializeField] private PlayerController player;
+    [SerializeField] private Character.Player player;
         
     [Header("Level Timer")]
     [SerializeField] private Timer timeLevel;

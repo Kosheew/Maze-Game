@@ -42,7 +42,15 @@ public class CommandCharacterFactory
     
     public void CreateDeadCommand(ICharacter character)
     {
-        
+        ICommand deadCommand = new DeadCommand(_container, character);
+        _invoker.SetCommand(deadCommand);
+        _invoker.ExecuteCommands();
     }
-    
+
+    public void CreateMoveCommand(ICharacter character)
+    {
+        ICommand moveCommand = new MoveCommand(_container, character);
+        _invoker.SetCommand(moveCommand);
+        _invoker.ExecuteCommands();
+    }
 }
