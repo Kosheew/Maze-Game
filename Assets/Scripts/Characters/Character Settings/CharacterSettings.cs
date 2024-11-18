@@ -6,9 +6,19 @@ namespace Character.Character_Settings
     {
         [SerializeField] private float moveSpeed;
         [SerializeField] private float turnSpeed;
-        [SerializeField] private ICharacterState[] characterState;
+        [SerializeField] private StateSettings[] characterState;
         
         public float MoveSpeed => moveSpeed;
         public float TurnSpeed => turnSpeed;
+
+        public StateSettings GetStateSettings(TypeCharacterStates type)
+        {
+            foreach (var element in characterState)
+            {
+                if(element.TypeCharacterStates.Equals(type))
+                    return element;
+            }
+            return null;
+        }
     }
 }

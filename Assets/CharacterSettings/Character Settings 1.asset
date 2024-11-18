@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0
   turnSpeed: 0
+  characterState:
+  - {fileID: 0}
   maxClamp: 0
   accelerationRate: 0
