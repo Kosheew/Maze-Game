@@ -22,7 +22,6 @@ namespace Enemy.State
             _footstepHandler = _enemy.FootstepHandler;
             targets = _enemy.Targets;
             
-            _enemy.SetAnimation("Run", true); 
         }
 
 

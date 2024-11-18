@@ -1,6 +1,7 @@
 using UnityEngine;
 using Character;
 using UserController;
+using Commands;
 
 namespace Character
 {
@@ -21,12 +22,12 @@ namespace Character
         [SerializeField] private float accelerationRate = 2f;
         
         private StateManager _stateManager;
-        private CommandCharacterFactory _commandFactory;
+        private CommandPlayerFactory _commandFactory;
         
         public void Inject(DependencyContainer container)
         {
             _stateManager = container.Resolve<StateManager>();
-            _commandFactory = container.Resolve<CommandCharacterFactory>();
+            _commandFactory = container.Resolve<CommandPlayerFactory>();
             
             CharacterController = GetComponent<CharacterController>();
             UserController = container.Resolve<IUserController>();

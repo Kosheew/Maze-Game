@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using UnityEngine;
 using Enemy.State;
 using Enemy.Command;
+using Commands;
 
 namespace Enemy
 {
@@ -26,16 +27,19 @@ namespace Enemy
         
         public int CurrentIndex { get; private set; }
         private StateManager _stateManager;
-        private CommandCharacterFactory _commandFactory;
+        private CommandEnemyFactory _commandFactory;
+        private CharacterAnimator _characterAnimator;
         
         public void Inject(DependencyContainer container)
         {
             Agent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
+            _characterAnimator = new CharacterAnimator(_animator);
+            
             _player = container.Resolve<Player>().transform;
             _audioSettings = container.Resolve<AudioSettings>();
             _stateManager = container.Resolve<StateManager>();
-            _commandFactory = container.Resolve<CommandCharacterFactory>();
+            _commandFactory = container.Resolve<CommandEnemyFactory>();
 
             FootstepHandler = new FootstepHandler(audioSource, _audioSettings);
             
@@ -68,9 +72,5 @@ namespace Enemy
             _commandFactory.CharacterIdleCommand(this);
         }
         
-        public void SetAnimation(string param, bool value)
-        {
-            _animator.SetBool(param, value);
-        }
     }
 }

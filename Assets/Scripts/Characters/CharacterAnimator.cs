@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterAnimator : MonoBehaviour
+public class CharacterAnimator 
 {
     private Animator _animator;
+    private int _attackHash;
+    private int _runHash;
     
-    void Start()
+    public CharacterAnimator(Animator animator)
     {
-        
+        _animator = animator;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Attacking()
     {
-        
+        _animator.SetTrigger(_runHash);   
+    }
+
+    public void Running(float velocity)
+    {
+        _animator.SetFloat(_runHash, velocity);
     }
 }
