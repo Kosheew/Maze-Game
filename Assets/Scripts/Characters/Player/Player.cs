@@ -2,13 +2,14 @@ using UnityEngine;
 using Character;
 using UserController;
 using Commands;
+using CharacterSettings;
 
 namespace Character
 {
     public class Player : MonoBehaviour, ICharacter
     {
         public CharacterController CharacterController { get; private set; }
-        public AudioSettings AudioSettings { get; private set; }
+        public CharacterAudioSettings CharacterAudioSettings { get; private set; }
         public Camera CameraMain { get; private set; }
         public IFootstepHandler FootstepHandler { get; private set; }
         public IUserController UserController { get; private set; }
@@ -16,6 +17,14 @@ namespace Character
         
         [SerializeField] private AudioSource audioSource;           
 
+        [SerializeField] private CharacterSetting characterSetting;
+
+        public CharacterSetting CharacterSetting
+        {
+            get => characterSetting;
+            set => characterSetting = value;
+        }
+        
         [SerializeField] private float maxClamp = 60;
         [SerializeField] private float speedScale = 5f;
         [SerializeField] private float turnSpeed = 250f;
@@ -31,10 +40,10 @@ namespace Character
             
             CharacterController = GetComponent<CharacterController>();
             UserController = container.Resolve<IUserController>();
-            AudioSettings = container.Resolve<AudioSettings>();
+            CharacterAudioSettings = container.Resolve<CharacterAudioSettings>();
             
             Movement = new CharacterMovement(maxClamp, speedScale, accelerationRate, turnSpeed);
-            FootstepHandler = new FootstepHandler(audioSource, AudioSettings);
+            FootstepHandler = new FootstepHandler(audioSource, CharacterAudioSettings);
             CameraMain = Camera.main;
             
             _commandFactory.CreateMoveCommand(this);

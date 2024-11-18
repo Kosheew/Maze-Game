@@ -31,7 +31,7 @@ public class Game : MonoBehaviour
     [Header("Audio Manager")]
     [SerializeField] private AudioManager audioManager;
     
-    [SerializeField] private AudioSettings audioSettings;
+    [FormerlySerializedAs("audioSettings")] [SerializeField] private CharacterAudioSettings characterAudioSettings;
     
     private ScoreController _scoreController;
     private DependencyContainer _container;
@@ -58,7 +58,7 @@ public class Game : MonoBehaviour
     private void RegisterDependency()
     {
         _container.Register(_userController);
-        _container.Register(audioSettings);
+        _container.Register(characterAudioSettings);
         _container.Register(_stateManager);
         //  _container.Register();
     }

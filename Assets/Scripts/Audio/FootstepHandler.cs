@@ -4,30 +4,24 @@ namespace Character
 {
     public class FootstepHandler : IFootstepHandler
     {
-        private readonly AudioSource _audioSource;       
-        private readonly AudioClip[] _footstepClips;    
-        private readonly float _stepInterval;  
-        private float _nextStep = 0f; 
+        private readonly AudioSource _audioSource;
+        private readonly CharacterAudioSettings _characterAudioSettings;
+        private float _nextStep = 0;
         
-        public FootstepHandler(AudioSource audioSource, AudioSettings audioSettings)
+        public FootstepHandler(AudioSource audioSource, CharacterAudioSettings characterAudioSettings)
         {
             _audioSource = audioSource;
-            _footstepClips = audioSettings.StepAudioClips;
-            _stepInterval = audioSettings.StepInterval;
+            _characterAudioSettings = characterAudioSettings;
         }
         
         public void PlayFootstepSound()
         {
             if (!(Time.time >= _nextStep)) return;
-            var clip = GetRandomFootstepClip(); 
+            var clip = _characterAudioSettings.GetRandomFootstepClip();
             _audioSource.PlayOneShot(clip);        
-            _nextStep = Time.time + _stepInterval;   
+            _nextStep = Time.time + _characterAudioSettings.StepInterval;   
         }
         
-        private AudioClip GetRandomFootstepClip()
-        {
-            var index = Random.Range(0, _footstepClips.Length); 
-            return _footstepClips[index];                       
-        }
+        
     }
 }
