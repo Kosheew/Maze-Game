@@ -10,14 +10,14 @@ namespace CharacterSettings
         
         [SerializeField] private CharacterAudioSettings characterAudioSettings;
         
-        [SerializeField] private StateSetting[] characterState;
+        [SerializeField] private ScriptableObject[] characterState;
         
         public float MoveSpeed => moveSpeed;
         public float TurnSpeed => turnSpeed;
 
         public CharacterAudioSettings CharacterAudioSettings => characterAudioSettings;
         
-        public object GetStateSettings(TypeCharacterStates type)
+        /*public object GetStateSettings(TypeCharacterStates type)
         {
             foreach (var element in characterState)
             {
@@ -25,6 +25,6 @@ namespace CharacterSettings
                     return element;
             }
             return null;
-        }
+        }*/
     }
 }

@@ -9,6 +9,8 @@ namespace Characters.Enemy
         public NavMeshAgent Agent { get; }
         public Transform[] PatrolTargets { get; }
         public IFootstepHandler FootstepHandler { get; }
-        public void PlayerInChaseRange(); 
+        public Transform CurrentTarget { get; }
+        public void TargetInChaseRange(float distance);
+        public void TargetInAttackRange(float distance);
     }
 }

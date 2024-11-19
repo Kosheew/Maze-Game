@@ -28,7 +28,7 @@ namespace Enemy.State
 
             _characterSetting = character.CharacterSetting;
             
-            _stateSetting = (PatrollingState)_characterSetting.GetStateSettings(TypeCharacterStates.Patrolled);
+       //     _stateSetting = (PatrollingState)_characterSetting.GetStateSettings(TypeCharacterStates.Patrolled);
             _agent = enemy.Agent;
             _footstepHandler = enemy.FootstepHandler;
             _targets = enemy.PatrolTargets;
@@ -45,7 +45,7 @@ namespace Enemy.State
             if (character is not IEnemy enemy || _targets == null || _targets.Length == 0)
                 return;
 
-            enemy.PlayerInChaseRange();
+      //      enemy.TargetInChaseRange();
 
             if (HasReachedDestination())
             {
