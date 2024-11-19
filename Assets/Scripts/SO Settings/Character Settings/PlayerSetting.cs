@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SO_Settings.Character_Settings;
+using UnityEngine;
 
 namespace CharacterSettings
 {

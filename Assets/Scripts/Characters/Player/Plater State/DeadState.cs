@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
-using Character;
+using Characters;
 using UnityEngine;
 
-public class DeadState : IPlayerState
+namespace Player.State
 {
-    public void EnterState(IPlayer player)
+    public class DeadState : IPlayerState
     {
-        throw new System.NotImplementedException();
-    }
+        public void EnterState(IPlayer player)
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public void UpdateState(IPlayer player)
-    {
-        throw new System.NotImplementedException();
-    }
+        public void UpdateState(IPlayer player)
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public void ExitState(IPlayer player)
-    {
-        throw new System.NotImplementedException();
+        public void ExitState(IPlayer player)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

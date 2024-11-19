@@ -1,27 +1,31 @@
-﻿using Character;
-using Character.Command;
+﻿using Characters;
+using Characters.Command;
 
 namespace Commands
 {
-    public class CommandPlayerFactory: CommandCharacterFactory
+    public class CommandPlayerFactory
     {
-        public override void Inject(DependencyContainer container)
+        private CommandInvoker _invoker;
+        private DependencyContainer _container;
+
+        public void Inject(DependencyContainer container)
         {
-            base.Inject(container);
+            _invoker = container.Resolve<CommandInvoker>();
+            _container = container;
         }
         
         public void CreateDeadCommand(IPlayer player)
         {
-            ICommand deadCommand = new DeadCommand(Container, player);
-            Invoker.SetCommand(deadCommand);
-            Invoker.ExecuteCommands();
+            ICommand deadCommand = new DeadCommand(_container, player);
+            _invoker.SetCommand(deadCommand);
+            _invoker.ExecuteCommands();
         }
 
         public void CreateMoveCommand(IPlayer player)
         {
-            ICommand moveCommand = new MoveCommand(Container, player);
-            Invoker.SetCommand(moveCommand);
-            Invoker.ExecuteCommands();
+            ICommand moveCommand = new MoveCommand(_container, player);
+            _invoker.SetCommand(moveCommand);
+            _invoker.ExecuteCommands();
         }
     }
 }

@@ -1,40 +1,45 @@
-using Character.Enemy;
-using Character.Command;
+using Characters.Enemy;
+using Characters.Command;
 
 namespace Commands
 {
-    public class CommandEnemyFactory: CommandCharacterFactory
+    public class CommandEnemyFactory
     {
-        public override void Inject(DependencyContainer container)
+        private CommandInvoker _invoker;
+        private DependencyContainer _container;
+
+        public void Inject(DependencyContainer container)
         {
-            base.Inject(container);
+            _invoker = container.Resolve<CommandInvoker>();
+            _container = container;
         }
+        
         public void CreateAttackCommand(IEnemy enemy)
         {
-            ICommand attackCommand = new AttackCommand(Container, enemy);
-            Invoker.SetCommand(attackCommand);
-            Invoker.ExecuteCommands();
+            ICommand attackCommand = new AttackCommand(_container, enemy);
+            _invoker.SetCommand(attackCommand);
+            _invoker.ExecuteCommands();
         }
 
         public void CreatePatrolledCommand(IEnemy enemy)
         {
-            ICommand patrolledCommand = new PatrolledCommand(Container, enemy);
-            Invoker.SetCommand(patrolledCommand);
-            Invoker.ExecuteCommands();
+            ICommand patrolledCommand = new PatrolledCommand(_container, enemy);
+            _invoker.SetCommand(patrolledCommand);
+            _invoker.ExecuteCommands();
         }
 
         public void CreateChasingCommand(IEnemy enemy)
         {
-            ICommand chasingCommand = new ChasingCommand(Container, enemy);
-            Invoker.SetCommand(chasingCommand);
-            Invoker.ExecuteCommands();
+            ICommand chasingCommand = new ChasingCommand(_container, enemy);
+            _invoker.SetCommand(chasingCommand);
+            _invoker.ExecuteCommands();
         }
 
         public void CharacterIdleCommand(IEnemy enemy)
         {
-            ICommand idleCommand = new IdleCommand(Container, enemy);
-            Invoker.SetCommand(idleCommand);
-            Invoker.ExecuteCommands();
+            ICommand idleCommand = new IdleCommand(_container, enemy);
+            _invoker.SetCommand(idleCommand);
+            _invoker.ExecuteCommands();
         }
     }
 }

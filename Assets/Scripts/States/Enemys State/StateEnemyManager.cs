@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Character;
-using Character.Enemy;
+using Characters;
+using Characters.Enemy;
 
 public class StateEnemyManager
 {

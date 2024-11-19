@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Character
+namespace Characters
 {
     /// <summary>
     /// Handles player touch interactions using Unity's trigger detection system. 

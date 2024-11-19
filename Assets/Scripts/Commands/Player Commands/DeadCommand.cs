@@ -1,4 +1,4 @@
-namespace Character.Command
+namespace Characters.Command
 {
     public class DeadCommand : ICommand
     {

@@ -1,7 +1,7 @@
 using System;
-using Character;
+using Player.State;
 
-namespace Character
+namespace Characters
 {
     public class StatePlayerFactory
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Character.Enemy
+namespace Characters.Enemy
 {
     public interface IChasingTarget
     {

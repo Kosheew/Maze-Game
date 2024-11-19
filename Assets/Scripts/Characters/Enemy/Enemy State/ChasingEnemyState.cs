@@ -1,5 +1,5 @@
-using Character;
-using Character.Enemy;
+using Characters;
+using Characters.Enemy;
 
 
 namespace Enemy.State

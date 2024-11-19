@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Character
+namespace Characters
 {
     public class CharacterMovement : IMovement
     {

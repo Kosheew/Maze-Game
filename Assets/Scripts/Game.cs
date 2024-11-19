@@ -1,10 +1,10 @@
-using Enemy;
 using InitGame.Audio;
 using InitGame.Level;
-using Character;
+using Characters;
+using Characters.Enemy;
+using Characters.Player;
 using Commands;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UserController;
 
 public class Game : MonoBehaviour
@@ -13,7 +13,7 @@ public class Game : MonoBehaviour
     [SerializeField] private UserInterface userInterface;
         
     [Header("Player Settings")]
-    [SerializeField] private Character.Player player;
+    [SerializeField] private PlayerController player;
         
     [Header("Level Timer")]
     [SerializeField] private Timer timeLevel;
@@ -23,11 +23,9 @@ public class Game : MonoBehaviour
         
     [Header("Game Completion")]
     [SerializeField] private GameCompleted gameCompleted;
-        
-    [FormerlySerializedAs("character")]
-    [FormerlySerializedAs("enemyStateManager")]
-    [Header("Enemy Manager")]
-    [SerializeField] private Enemy.Enemy enemy;
+    
+    [Header("Enemy Manager")] 
+    [SerializeField] private EnemyController[] enemies;
 
     [Header("Audio Manager")]
     [SerializeField] private AudioManager audioManager;
@@ -59,10 +57,10 @@ public class Game : MonoBehaviour
         _commandInvoker = new CommandInvoker();
         
         _stateEnemyManager = new StateEnemyManager();
-        _stateEnemyFactory = new StateEnemyFactory();
-        
-        _statePlayerFactory = new StatePlayerFactory();
         _statePlayerManager = new StatePlayerManager();
+        
+        _stateEnemyFactory = new StateEnemyFactory();
+        _statePlayerFactory = new StatePlayerFactory();
         
         _commandEnemyFactory = new CommandEnemyFactory();
         _commandPlayerFactory = new CommandPlayerFactory();
@@ -81,22 +79,31 @@ public class Game : MonoBehaviour
         _container.Register(_commandInvoker);
         
         _container.Register(characterAudioSettings);
+        
         _container.Register(_stateEnemyManager);
         _container.Register(_statePlayerManager);
+        
+        _container.Register(_stateEnemyFactory);
         _container.Register(_statePlayerFactory);
+        
         _container.Register(_commandEnemyFactory);
         _container.Register(_commandPlayerFactory);
+        _container.Register(player);
         
         //  _container.Register();
     }
 
     private void Injection()
     {
-        
-        
         _commandPlayerFactory.Inject(_container);
+        _commandEnemyFactory.Inject(_container);
         
         player.Inject(_container);
+
+        foreach (var enemy in enemies)
+        {
+            enemy.Inject(_container);
+        }
     }
         
     private void Init()

@@ -1,6 +1,6 @@
-﻿using Character.Enemy;
+﻿using Characters.Enemy;
 
-namespace Character.Command
+namespace Characters.Command
 {
     public class IdleCommand: ICommand
     {

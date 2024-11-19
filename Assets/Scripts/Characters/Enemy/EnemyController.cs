@@ -1,58 +1,45 @@
-using Character;
-using UnityEngine.AI;
-using UnityEngine;
-using Commands;
+using Characters.Player;
 using CharacterSettings;
-using Character.Enemy;
+using Commands;
+using UnityEngine;
+using UnityEngine.AI;
 
-namespace Enemy
+namespace Characters.Enemy
 {
-    public class Enemy : MonoBehaviour, IEnemy
+    public class EnemyController : MonoBehaviour, IEnemy
     {
         [SerializeField] private Transform[] patrolTargets;
-        [SerializeField] private CharacterSetting characterSetting;
-     
-        private NavMeshAgent _agent;
-        private Transform _currentTarget;
+        [SerializeField] private EnemySetting enemySetting;
+        [SerializeField] private AudioSource audioSource;
+         
+        public NavMeshAgent Agent => GetComponent<NavMeshAgent>();
+        private Animator Animator => GetComponent<Animator>();
+        public EnemySetting EnemySetting => enemySetting;
         
-        public NavMeshAgent Agent => _agent;
         public Transform[] PatrolTargets => patrolTargets;
         public Transform CurrentTarget => _currentTarget;
-
+        public CharacterAnimator CharacterAnimator { get; private set; }
         public IFootstepHandler FootstepHandler { get; private set; }
-        public Transform MyPosition { get; set; }
-
-        public CharacterSetting CharacterSetting
-        {
-            get => characterSetting;
-            set => characterSetting = value;
-        }
-
-        [SerializeField] private AudioSource audioSource;
+        public Transform MainPosition => transform;
 
         private CharacterAudioSettings _characterAudioSettings;
-        private Animator _animator;
-        
+        private Transform _currentTarget;
         private StateEnemyManager _stateEnemyManager;
         private CommandEnemyFactory _commandFactory;
-        private CharacterAnimator _characterAnimator;
         
+
         public void Inject(DependencyContainer container)
         {
-            _agent = GetComponent<NavMeshAgent>();
-            _animator = GetComponent<Animator>();
-
-            _agent.speed = CharacterSetting.MoveSpeed;
+            Agent.speed = enemySetting.MoveSpeed;
             
-            _characterAudioSettings = characterSetting.CharacterAudioSettings;
-            MyPosition = transform;
+            _characterAudioSettings = enemySetting.CharacterAudioSettings;
             
-            _currentTarget = container.Resolve<Player>().transform;
+            _currentTarget = container.Resolve<PlayerController>().TransformMain;
             _stateEnemyManager = container.Resolve<StateEnemyManager>();
             _commandFactory = container.Resolve<CommandEnemyFactory>();
 
             FootstepHandler = new FootstepHandler(audioSource, _characterAudioSettings);
-            _characterAnimator = new CharacterAnimator(_animator);
+            CharacterAnimator = new CharacterAnimator(Animator);
             
             _commandFactory.CreatePatrolledCommand(this);
         }
@@ -77,12 +64,5 @@ namespace Enemy
                 _commandFactory.CreateAttackCommand(this);
             }
         }
-
-        public void PlayerRotateTarget()
-        {
-            _commandFactory.CharacterIdleCommand(this);
-        }
-        
-        
     }
 }

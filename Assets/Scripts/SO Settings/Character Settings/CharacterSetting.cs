@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CharacterSettings
+namespace SO_Settings.Character_Settings
 {
     public abstract class CharacterSetting: ScriptableObject
     {

@@ -1,5 +1,5 @@
 using System;
-using Character;
+using Characters;
 using Enemy.State;
 
 public class StateEnemyFactory 

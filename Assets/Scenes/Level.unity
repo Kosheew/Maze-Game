@@ -33719,7 +33719,8 @@ MonoBehaviour:
   timeLevel: {fileID: 0}
   viewPanels: {fileID: 0}
   gameCompleted: {fileID: 0}
-  enemy: {fileID: 0}
+  enemies:
+  - {fileID: 2104598489}
   audioManager: {fileID: 1123118595}
   characterAudioSettings: {fileID: 11400000, guid: 18eb08684c98ce44bab0b7e19ccfd25d,
     type: 2}
@@ -44906,6 +44907,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 692184763}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &2104598488 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8460848105505927735, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1523402146667344199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2104598489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8580107483517773910, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1523402146667344199}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b44e0dfb9004814f8e823f5043a99ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2107472215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46271,12 +46290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39054ae3cb097cd4595c2cac1f9017a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSetting: {fileID: 11400000, guid: 58894a960c2d2294a82ca0a89d71c067, type: 2}
   audioSource: {fileID: 1123118593}
-  characterSetting: {fileID: 11400000, guid: 58894a960c2d2294a82ca0a89d71c067, type: 2}
-  maxClamp: 60
-  speedScale: 5
-  turnSpeed: 250
-  accelerationRate: 2
 --- !u!143 &999787359909640163
 CharacterController:
   m_ObjectHideFlags: 0
@@ -46362,7 +46377,7 @@ Transform:
   m_GameObject: {fileID: 361941058}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.5, y: 1.095, z: -11.77}
+  m_LocalPosition: {x: 3.07, y: 1.095, z: 31.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -46385,7 +46400,7 @@ PrefabInstance:
     - target: {fileID: 4969123699398972195, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7423984146673723665, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
         type: 3}
@@ -46439,6 +46454,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8580107483517773910, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
         type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 2104598488}
+    - target: {fileID: 8580107483517773910, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
+        type: 3}
+      propertyPath: enemySetting
+      value: 
+      objectReference: {fileID: 11400000, guid: afbb0304e3272494097a2020f684cf8c,
+        type: 2}
+    - target: {fileID: 8580107483517773910, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
+        type: 3}
       propertyPath: _targets.Array.data[0]
       value: 
       objectReference: {fileID: 1588802644}
@@ -46447,6 +46473,21 @@ PrefabInstance:
       propertyPath: _targets.Array.data[1]
       value: 
       objectReference: {fileID: 692128905}
+    - target: {fileID: 8580107483517773910, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
+        type: 3}
+      propertyPath: patrolTargets.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580107483517773910, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
+        type: 3}
+      propertyPath: patrolTargets.Array.data[0]
+      value: 
+      objectReference: {fileID: 692128905}
+    - target: {fileID: 8580107483517773910, guid: bd42efe33d1ee9348b6fffa75ce4fe8c,
+        type: 3}
+      propertyPath: patrolTargets.Array.data[1]
+      value: 
+      objectReference: {fileID: 1588802644}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

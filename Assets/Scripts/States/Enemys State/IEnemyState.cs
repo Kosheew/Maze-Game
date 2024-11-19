@@ -1,6 +1,6 @@
-using Character.Enemy;
+using Characters.Enemy;
 
-namespace Character
+namespace Characters
 {
     public interface IEnemyState
     {

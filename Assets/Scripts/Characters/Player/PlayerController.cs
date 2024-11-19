@@ -1,36 +1,24 @@
 using UnityEngine;
-using Character;
+
 using UserController;
 using Commands;
 using CharacterSettings;
 
-namespace Character
+
+namespace Characters.Player
 {
-    public class Player : MonoBehaviour, IPlayer
+    public class PlayerController : MonoBehaviour, IPlayer
     {
-        public CharacterController CharacterController { get; private set; }
+        [SerializeField] private PlayerSetting playerSetting;
+        [SerializeField] private AudioSource audioSource;
         public CharacterAudioSettings CharacterAudioSettings { get; private set; }
+        public CharacterController Controller { get; private set; }
         public Camera CameraMain { get; private set; }
+        public PlayerSetting PlayerSetting => playerSetting;
         public IFootstepHandler FootstepHandler { get; private set; }
-        public Transform MyPosition { get; set; }
         public IUserController UserController { get; private set; }
-        public IMovement Movement { get; private set; }
-        
-        [SerializeField] private AudioSource audioSource;           
+        public Transform TransformMain => transform;
 
-        [SerializeField] private CharacterSetting characterSetting;
-
-        public CharacterSetting CharacterSetting
-        {
-            get => characterSetting;
-            set => characterSetting = value;
-        }
-        
-        [SerializeField] private float maxClamp = 60;
-        [SerializeField] private float speedScale = 5f;
-        [SerializeField] private float turnSpeed = 250f;
-        [SerializeField] private float accelerationRate = 2f;
-        
         private StatePlayerManager _statePlayerManager;
         private CommandPlayerFactory _commandFactory;
         
@@ -39,17 +27,14 @@ namespace Character
             _statePlayerManager = container.Resolve<StatePlayerManager>();
             _commandFactory = container.Resolve<CommandPlayerFactory>();
             
-            CharacterController = GetComponent<CharacterController>();
+            Controller = GetComponent<CharacterController>();
             UserController = container.Resolve<IUserController>();
-            CharacterAudioSettings = container.Resolve<CharacterAudioSettings>();
+            CharacterAudioSettings = playerSetting.CharacterAudioSettings;
             
-            Movement = new CharacterMovement(maxClamp, speedScale, accelerationRate, turnSpeed);
             FootstepHandler = new FootstepHandler(audioSource, CharacterAudioSettings);
             CameraMain = Camera.main;
             
             _commandFactory.CreateMoveCommand(this);
-            
-            
             
             Cursor.lockState = CursorLockMode.Locked;
         }

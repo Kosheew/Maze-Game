@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class CharacterAnimator 
 {
-    private Animator _animator;
-    private int _attackHash;
-    private int _runHash;
+    private readonly Animator _animator;
+    private readonly int _attackHash;
+    private readonly int _runHash;
     
     public CharacterAnimator(Animator animator)
     {
         _animator = animator;
+        _attackHash = Animator.StringToHash("Attack");
+        _runHash = Animator.StringToHash("Run");
     }
 
     public void Attacking()
     {
-        _animator.SetTrigger(_runHash);   
+        _animator.SetTrigger(_attackHash);   
     }
 
     public void Running(float velocity)
