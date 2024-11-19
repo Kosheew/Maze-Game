@@ -1,22 +1,24 @@
-﻿namespace Character.Command
+﻿using Character.Enemy;
+
+namespace Character.Command
 {
     public class PatrolledCommand: ICommand
     {
-        private readonly StateManager _stateManager;
-        private readonly StateFactory _stateFactory;
-        private readonly ICharacter _character;
+        private readonly StateEnemyManager _stateEnemyManager;
+        private readonly StateEnemyFactory _stateEnemyFactory;
+        private readonly IEnemy _enemy;
         
-        public PatrolledCommand(DependencyContainer container, ICharacter character)
+        public PatrolledCommand(DependencyContainer container, IEnemy enemy)
         {
-            _stateManager = container.Resolve<StateManager>();
-            _stateFactory = container.Resolve<StateFactory>();
-            _character = character;
+            _stateEnemyManager = container.Resolve<StateEnemyManager>();
+            _stateEnemyFactory = container.Resolve<StateEnemyFactory>();
+            _enemy = enemy;
         }
 
         public void Execute()
         {
-            var characterState = _stateFactory.CreateState(TypeCharacterStates.Patrolled);
-            _stateManager.SetState(characterState, _character);
+            var characterState = _stateEnemyFactory.CreateState(TypeCharacterStates.Patrolled);
+            _stateEnemyManager.SetState(characterState, _enemy);
         }
     }
 }

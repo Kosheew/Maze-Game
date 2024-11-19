@@ -1,20 +1,22 @@
 ﻿using Character;
+using Character.Enemy;
+
 
 namespace Enemy.State
 {
-    public class IdleCharacterState: ICharacterState
+    public class IdleEnemyState: IEnemyState
     {
-        public void EnterState(ICharacter character)
+        public void EnterState(IEnemy enemy)
         {
             throw new System.NotImplementedException();
         }
 
-        public void UpdateState(ICharacter character)
+        public void UpdateState(IEnemy enemy)
         {
             throw new System.NotImplementedException();
         }
 
-        public void ExitState(ICharacter character)
+        public void ExitState(IEnemy enemy)
         {
             throw new System.NotImplementedException();
         }

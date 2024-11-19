@@ -2,6 +2,7 @@ using Enemy;
 using InitGame.Audio;
 using InitGame.Level;
 using Character;
+using Commands;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UserController;
@@ -31,12 +32,21 @@ public class Game : MonoBehaviour
     [Header("Audio Manager")]
     [SerializeField] private AudioManager audioManager;
     
-    [FormerlySerializedAs("audioSettings")] [SerializeField] private CharacterAudioSettings characterAudioSettings;
+    [SerializeField] private CharacterAudioSettings characterAudioSettings;
+    
+    private CommandInvoker _commandInvoker;
     
     private ScoreController _scoreController;
     private DependencyContainer _container;
-    private StateManager _stateManager;
-    private StateFactory _stateFactory;
+    
+    private StateEnemyManager _stateEnemyManager;
+    private StatePlayerManager _statePlayerManager;
+    
+    private StateEnemyFactory _stateEnemyFactory;
+    private StatePlayerFactory _statePlayerFactory;
+
+    private CommandPlayerFactory _commandPlayerFactory;
+    private CommandEnemyFactory _commandEnemyFactory;
     
     private IUserController _userController;
         
@@ -45,8 +55,17 @@ public class Game : MonoBehaviour
         _container = new DependencyContainer();
         _scoreController = new ScoreController();
         _userController = new WindowsController();
-        _stateManager = new StateManager();
-        _stateFactory = new StateFactory();
+        
+        _commandInvoker = new CommandInvoker();
+        
+        _stateEnemyManager = new StateEnemyManager();
+        _stateEnemyFactory = new StateEnemyFactory();
+        
+        _statePlayerFactory = new StatePlayerFactory();
+        _statePlayerManager = new StatePlayerManager();
+        
+        _commandEnemyFactory = new CommandEnemyFactory();
+        _commandPlayerFactory = new CommandPlayerFactory();
         
         RegisterDependency();
             
@@ -58,13 +77,25 @@ public class Game : MonoBehaviour
     private void RegisterDependency()
     {
         _container.Register(_userController);
+        
+        _container.Register(_commandInvoker);
+        
         _container.Register(characterAudioSettings);
-        _container.Register(_stateManager);
+        _container.Register(_stateEnemyManager);
+        _container.Register(_statePlayerManager);
+        _container.Register(_statePlayerFactory);
+        _container.Register(_commandEnemyFactory);
+        _container.Register(_commandPlayerFactory);
+        
         //  _container.Register();
     }
 
     private void Injection()
     {
+        
+        
+        _commandPlayerFactory.Inject(_container);
+        
         player.Inject(_container);
     }
         
@@ -74,7 +105,7 @@ public class Game : MonoBehaviour
         //    gameCompleted.Init();
         //   _scoreController.Init();
         //   userInterface.Init();
-        player.Init();
+       // player.Inject(_container);
         // timeLevel.Init(_container);
         //   viewPanels.Init();
         //   enemyStateManager.Init(_container);

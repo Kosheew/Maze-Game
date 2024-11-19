@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Characters.Enemy
+namespace Character.Enemy
 {
     public interface IAttackingCharacter
     {

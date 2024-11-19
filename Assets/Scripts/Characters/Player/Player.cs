@@ -6,12 +6,13 @@ using CharacterSettings;
 
 namespace Character
 {
-    public class Player : MonoBehaviour, ICharacter
+    public class Player : MonoBehaviour, IPlayer
     {
         public CharacterController CharacterController { get; private set; }
         public CharacterAudioSettings CharacterAudioSettings { get; private set; }
         public Camera CameraMain { get; private set; }
         public IFootstepHandler FootstepHandler { get; private set; }
+        public Transform MyPosition { get; set; }
         public IUserController UserController { get; private set; }
         public IMovement Movement { get; private set; }
         
@@ -30,12 +31,12 @@ namespace Character
         [SerializeField] private float turnSpeed = 250f;
         [SerializeField] private float accelerationRate = 2f;
         
-        private StateManager _stateManager;
+        private StatePlayerManager _statePlayerManager;
         private CommandPlayerFactory _commandFactory;
         
         public void Inject(DependencyContainer container)
         {
-            _stateManager = container.Resolve<StateManager>();
+            _statePlayerManager = container.Resolve<StatePlayerManager>();
             _commandFactory = container.Resolve<CommandPlayerFactory>();
             
             CharacterController = GetComponent<CharacterController>();
@@ -47,16 +48,15 @@ namespace Character
             CameraMain = Camera.main;
             
             _commandFactory.CreateMoveCommand(this);
-        }
-        
-        public void Init()
-        {
+            
+            
+            
             Cursor.lockState = CursorLockMode.Locked;
         }
         
         private void Update()
         {
-            _stateManager.UpdateState(this);
+            _statePlayerManager?.UpdateState(this);
         }
     }
 }

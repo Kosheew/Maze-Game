@@ -1,16 +1,18 @@
 using Character;
+using Character.Enemy;
+
 
 namespace Enemy.State
 {
-    public class ChasingCharacterState : ICharacterState
+    public class ChasingEnemyState : IEnemyState
     {
-        public void EnterState(ICharacter character)
+        public void EnterState(IEnemy enemy)
         {
             /*character.SetAnimation("Run", true);
             character.ResumeMovement();*/
         }
         
-        public void UpdateState(ICharacter character)
+        public void UpdateState(IEnemy enemy)
         {
             /*if (!character.IsPlayerInChaseRange())
             {
@@ -26,7 +28,7 @@ namespace Enemy.State
             }*/
         }
 
-        public void ExitState(ICharacter character)
+        public void ExitState(IEnemy enemy)
         {
             
         }

@@ -1,36 +1,38 @@
-using Character;
+using Character.Enemy;
 using Character.Command;
 
 namespace Commands
 {
     public class CommandEnemyFactory: CommandCharacterFactory
     {
-        protected CommandEnemyFactory(DependencyContainer container) : base(container) { }
-
-        public void CreateAttackCommand(ICharacter character)
+        public override void Inject(DependencyContainer container)
         {
-            ICommand attackCommand = new AttackCommand(Container, character);
+            base.Inject(container);
+        }
+        public void CreateAttackCommand(IEnemy enemy)
+        {
+            ICommand attackCommand = new AttackCommand(Container, enemy);
             Invoker.SetCommand(attackCommand);
             Invoker.ExecuteCommands();
         }
 
-        public void CreatePatrolledCommand(ICharacter character)
+        public void CreatePatrolledCommand(IEnemy enemy)
         {
-            ICommand patrolledCommand = new PatrolledCommand(Container, character);
+            ICommand patrolledCommand = new PatrolledCommand(Container, enemy);
             Invoker.SetCommand(patrolledCommand);
             Invoker.ExecuteCommands();
         }
 
-        public void CreateChasingCommand(ICharacter character)
+        public void CreateChasingCommand(IEnemy enemy)
         {
-            ICommand chasingCommand = new ChasingCommand(Container, character);
+            ICommand chasingCommand = new ChasingCommand(Container, enemy);
             Invoker.SetCommand(chasingCommand);
             Invoker.ExecuteCommands();
         }
 
-        public void CharacterIdleCommand(ICharacter character)
+        public void CharacterIdleCommand(IEnemy enemy)
         {
-            ICommand idleCommand = new IdleCommand(Container, character);
+            ICommand idleCommand = new IdleCommand(Container, enemy);
             Invoker.SetCommand(idleCommand);
             Invoker.ExecuteCommands();
         }

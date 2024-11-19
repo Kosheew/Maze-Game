@@ -1,12 +1,12 @@
 ﻿
 namespace Commands
 {
-    public class CommandCharacterFactory
+    public abstract class CommandCharacterFactory
     {
-        protected readonly CommandInvoker Invoker;
-        protected readonly DependencyContainer Container;
+        protected CommandInvoker Invoker;
+        protected DependencyContainer Container;
 
-        protected CommandCharacterFactory(DependencyContainer container)
+        public virtual void Inject(DependencyContainer container)
         {
             Invoker = container.Resolve<CommandInvoker>();
             Container = container;

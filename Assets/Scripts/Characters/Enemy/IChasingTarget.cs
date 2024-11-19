@@ -1,11 +1,9 @@
-﻿using CharacterSettings.StateSettings;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Characters.Enemy
+namespace Character.Enemy
 {
     public interface IChasingTarget
     {
-        public ChasingState ChasingState { get; }
         public void TargetInChaseRange(Transform target);
     }
 }

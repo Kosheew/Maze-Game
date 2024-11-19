@@ -1,18 +1,20 @@
 using Character;
+using Character.Enemy;
+
 
 namespace Enemy.State
 {
 
-    public class AttackingCharacterState : ICharacterState
+    public class AttackingEnemyState : IEnemyState
     {
 
-        public void EnterState(ICharacter character)
+        public void EnterState(IEnemy enemy)
         {
             /*enemy.SetAnimation("Run", false);
             enemy.AttackPlayer();*/
         }
         
-        public void UpdateState(ICharacter character)
+        public void UpdateState(IEnemy enemy)
         {
             /*if (!enemy.IsPlayerInAttackRange())
             {
@@ -20,7 +22,7 @@ namespace Enemy.State
             }*/
         }
 
-        public void ExitState(ICharacter character)
+        public void ExitState(IEnemy enemy)
         {
             
         }

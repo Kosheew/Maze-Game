@@ -2,7 +2,7 @@ using UserController;
 using Character;
 using UnityEngine;
 
-public class MovementState : ICharacterState
+public class MovementState : IPlayerState
 {
     private Player _player;
     private Camera _camera;
@@ -14,9 +14,9 @@ public class MovementState : ICharacterState
     private IUserController _userController;
     private IMovement _movement;
     
-    public void EnterState(ICharacter character)
+    public void EnterState(IPlayer player)
     {
-        _player = (Player)character;
+        _player = (Player)player;
         
         _characterController = _player.CharacterController;
         _characterAudioSettings = _player.CharacterAudioSettings;
@@ -26,7 +26,7 @@ public class MovementState : ICharacterState
         _camera = _player.CameraMain;
     }
 
-    public void UpdateState(ICharacter character)
+    public void UpdateState(IPlayer player)
     {
         var lookX = _userController.GetLookDirectionX();
         var lookY = _userController.GetLookDirectionY();
@@ -45,7 +45,7 @@ public class MovementState : ICharacterState
         }
     }
 
-    public void ExitState(ICharacter character)
+    public void ExitState(IPlayer player)
     {
         throw new System.NotImplementedException();
     }

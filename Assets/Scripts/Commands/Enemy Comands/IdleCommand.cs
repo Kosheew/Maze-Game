@@ -1,22 +1,24 @@
-﻿namespace Character.Command
+﻿using Character.Enemy;
+
+namespace Character.Command
 {
     public class IdleCommand: ICommand
     {
-        private readonly StateManager _stateManager;
-        private readonly StateFactory _stateFactory;
-        private readonly ICharacter _character;
+        private readonly StateEnemyManager _stateEnemyManager;
+        private readonly StateEnemyFactory _stateEnemyFactory;
+        private readonly IEnemy _enemy;
         
-        public IdleCommand(DependencyContainer container, ICharacter character)
+        public IdleCommand(DependencyContainer container, IEnemy enemy)
         {
-            _stateManager = container.Resolve<StateManager>();
-            _stateFactory = container.Resolve<StateFactory>();
-            _character = character;
+            _stateEnemyManager = container.Resolve<StateEnemyManager>();
+            _stateEnemyFactory = container.Resolve<StateEnemyFactory>();
+            _enemy = enemy;
         }
 
         public void Execute()
         {
-            var characterState = _stateFactory.CreateState(TypeCharacterStates.Idle);
-            _stateManager.SetState(characterState, _character);
+            var characterState = _stateEnemyFactory.CreateState(TypeCharacterStates.Idle);
+            _stateEnemyManager.SetState(characterState, _enemy);
         }
     }
 }

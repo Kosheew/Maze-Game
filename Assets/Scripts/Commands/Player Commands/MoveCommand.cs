@@ -2,21 +2,21 @@ namespace Character.Command
 {
     public class MoveCommand : ICommand
     {
-        private readonly StateManager _stateManager;
-        private readonly StateFactory _stateFactory;
-        private readonly ICharacter _character;
+        private readonly StatePlayerManager _stateEnemyManager;
+        private readonly StatePlayerFactory _stateEnemyFactory;
+        private readonly IPlayer _player;
         
-        public MoveCommand(DependencyContainer container, ICharacter character)
+        public MoveCommand(DependencyContainer container, IPlayer player)
         {
-            _stateManager = container.Resolve<StateManager>();
-            _stateFactory = container.Resolve<StateFactory>();
-            _character = character;
+            _stateEnemyManager = container.Resolve<StatePlayerManager>();
+            _stateEnemyFactory = container.Resolve<StatePlayerFactory>();
+            _player = player;
         }
 
         public void Execute()
         {
-            var characterState = _stateFactory.CreateState(TypeCharacterStates.Move);
-            _stateManager.SetState(characterState, _character);
+            var characterState = _stateEnemyFactory.CreateState(TypeCharacterStates.Move);
+            _stateEnemyManager.SetState(characterState, _player);
         }
     }
 }

@@ -2,21 +2,21 @@ namespace Character.Command
 {
     public class DeadCommand : ICommand
     {
-        private readonly StateManager _stateManager;
-        private readonly StateFactory _stateFactory;
-        private readonly ICharacter _character;
-
-        public DeadCommand(DependencyContainer container, ICharacter character)
+        private readonly StatePlayerManager _statePlayerManager;
+        private readonly StatePlayerFactory _stateEnemyFactory;
+        private readonly IPlayer _player;
+        
+        public DeadCommand(DependencyContainer container, IPlayer player)
         {
-            _stateManager = container.Resolve<StateManager>();
-            _stateFactory = container.Resolve<StateFactory>();
-            _character = character;
+            _statePlayerManager = container.Resolve<StatePlayerManager>();
+            _stateEnemyFactory = container.Resolve<StatePlayerFactory>();
+            _player = player;
         }
 
         public void Execute()
         {
-            var characterState = _stateFactory.CreateState(TypeCharacterStates.Dead);
-            _stateManager.SetState(characterState, _character);
+            var characterState = _stateEnemyFactory.CreateState(TypeCharacterStates.Dead);
+            _statePlayerManager.SetState(characterState, _player);
         }
     }
 }
