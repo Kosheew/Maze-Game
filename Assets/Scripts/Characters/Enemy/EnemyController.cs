@@ -25,7 +25,7 @@ namespace Characters.Enemy
         private CharacterAudioSettings _characterAudioSettings;
         private Transform _currentTarget;
         private StateEnemyManager _stateEnemyManager;
-        private CommandEnemyFactory _commandFactory;
+        public CommandEnemyFactory CommandEnemy { get; private set; }
         
 
         public void Inject(DependencyContainer container)
@@ -36,44 +36,17 @@ namespace Characters.Enemy
             
             _currentTarget = container.Resolve<PlayerController>().TransformMain;
             _stateEnemyManager = container.Resolve<StateEnemyManager>();
-            _commandFactory = container.Resolve<CommandEnemyFactory>();
+            CommandEnemy = container.Resolve<CommandEnemyFactory>();
 
             FootstepHandler = new FootstepHandler(audioSource, _characterAudioSettings);
             CharacterAnimator = new CharacterAnimator(Animator);
             
-            _commandFactory.CreatePatrolledCommand(this);
+            CommandEnemy.CreatePatrolledCommand(this);
         }
 
         private void Update()
         {
             _stateEnemyManager.UpdateState(this);
-        }
-        
-        public void TargetInChaseRange(float distance)
-        {
-           
-            if (Vector3.Distance(transform.position, _currentTarget.position) < distance && _currentTarget)
-            {
-                Debug.Log("Chase");
-                _commandFactory.CreateChasingCommand(this);
-            }
-        }
-        
-        public void TargetInAttackRange(float distance)
-        {
-            if (Vector3.Distance(transform.position, _currentTarget.position) < distance && _currentTarget)
-            {
-                Debug.Log("I Attacked");
-                _commandFactory.CreateAttackCommand(this);
-            }
-        }
-        
-        public void TargetNotInChaseRange(float distance)
-        {
-            if (Vector3.Distance(transform.position, _currentTarget.position) > distance && _currentTarget)
-            {
-                _commandFactory.CreatePatrolledCommand(this);
-            }
         }
     }
 }

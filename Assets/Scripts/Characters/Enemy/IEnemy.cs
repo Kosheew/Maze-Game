@@ -1,4 +1,5 @@
 using CharacterSettings;
+using Commands;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,9 +13,7 @@ namespace Characters.Enemy
         public Transform CurrentTarget { get; }
         public CharacterAnimator CharacterAnimator { get; }
         public Transform MainPosition { get; }
+        public CommandEnemyFactory CommandEnemy { get; }
         public IFootstepHandler FootstepHandler { get; }
-        public void TargetInChaseRange(float distance);
-        public void TargetInAttackRange(float distance);
-        public void TargetNotInChaseRange(float distance);
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e2ae22bd4074368afbf885b6d646bde, type: 3}
   m_Name: Enemy Settings
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 2
   turnSpeed: 10
   characterAudioSettings: {fileID: 11400000, guid: 18eb08684c98ce44bab0b7e19ccfd25d,
     type: 2}

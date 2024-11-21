@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Characters.Enemy;
 using CharacterSettings;
+using Commands;
 
 namespace Enemy.State
 {
@@ -13,6 +14,7 @@ namespace Enemy.State
         private IFootstepHandler _footstepHandler;
         private Transform[] _targets;
         private CharacterAnimator _characterAnimator;
+        private CommandEnemyFactory _commandEnemy;
         
         private int _currentIndex;
         private float _chaseDistance;
@@ -25,15 +27,20 @@ namespace Enemy.State
             _targets = enemy.PatrolTargets;
             _chaseDistance = _enemySetting.ChaseDistance;
             _characterAnimator = enemy.CharacterAnimator;
+            _commandEnemy = enemy.CommandEnemy;
             
             _currentIndex = 0;
         }
 
         public void UpdateState(IEnemy enemy)
         {
-            enemy.TargetInChaseRange(_chaseDistance);
-            
             _characterAnimator.Running(_agent.velocity.magnitude);
+            
+            if (Vector3.Distance(enemy.MainPosition.position, enemy.CurrentTarget.position) < 10 && enemy.CurrentTarget)
+            {
+                Debug.Log("Chase");
+                _commandEnemy.CreateChasingCommand(enemy);
+            }
             
             if (HasReachedDestination())
             {
