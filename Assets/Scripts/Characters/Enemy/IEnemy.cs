@@ -15,5 +15,6 @@ namespace Characters.Enemy
         public IFootstepHandler FootstepHandler { get; }
         public void TargetInChaseRange(float distance);
         public void TargetInAttackRange(float distance);
+        public void TargetNotInChaseRange(float distance);
     }
 }

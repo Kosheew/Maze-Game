@@ -17,7 +17,7 @@ namespace Characters.Command
 
         public void Execute()
         {
-            var characterState = _stateEnemyFactory.CreateState(TypeCharacterStates.Patrolled);
+            var characterState = _stateEnemyFactory.CreateState(TypeCharacterStates.Chased);
             _stateEnemyManager.SetState(characterState, _enemy);
         }
     }

@@ -51,8 +51,10 @@ namespace Characters.Enemy
         
         public void TargetInChaseRange(float distance)
         {
+           
             if (Vector3.Distance(transform.position, _currentTarget.position) < distance && _currentTarget)
             {
+                Debug.Log("Chase");
                 _commandFactory.CreateChasingCommand(this);
             }
         }
@@ -61,7 +63,16 @@ namespace Characters.Enemy
         {
             if (Vector3.Distance(transform.position, _currentTarget.position) < distance && _currentTarget)
             {
+                Debug.Log("I Attacked");
                 _commandFactory.CreateAttackCommand(this);
+            }
+        }
+        
+        public void TargetNotInChaseRange(float distance)
+        {
+            if (Vector3.Distance(transform.position, _currentTarget.position) > distance && _currentTarget)
+            {
+                _commandFactory.CreatePatrolledCommand(this);
             }
         }
     }
