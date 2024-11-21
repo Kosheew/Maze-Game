@@ -1,6 +1,7 @@
 using UnityEngine;
 using UserController;
 using CharacterSettings;
+using Audio;
 
 namespace Characters
 {
@@ -11,7 +12,7 @@ namespace Characters
         public CharacterController Controller { get;  }
         public Camera CameraMain { get; }
         public IUserController UserController { get; }
-        public IFootstepHandler FootstepHandler { get; }
+        public IFootstepAudioHandler FootstepHandler { get; }
         public Transform TransformMain { get; }
     }
 }

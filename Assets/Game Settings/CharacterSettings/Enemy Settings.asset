@@ -17,3 +17,5 @@ MonoBehaviour:
   characterAudioSettings: {fileID: 11400000, guid: 18eb08684c98ce44bab0b7e19ccfd25d,
     type: 2}
   chaseDistance: 10
+  attackDistance: 2
+  attackCooldown: 1

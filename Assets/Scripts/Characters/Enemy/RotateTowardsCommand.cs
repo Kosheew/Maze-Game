@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Enemy.Command
 {
 
-    public class RotateTowardsCommand : ICommand
+    /*public class RotateTowardsCommand : ICommand
     {
         private Transform _transform;
         private Vector3 _target;
@@ -22,5 +22,5 @@ namespace Enemy.Command
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             _transform.rotation = Quaternion.Slerp(_transform.rotation, lookRotation, Time.deltaTime * _rotationSpeed);
         }
-    }
+    }*/
 }

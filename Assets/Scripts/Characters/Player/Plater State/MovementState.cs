@@ -2,6 +2,7 @@ using UserController;
 using Characters;
 using UnityEngine;
 using CharacterSettings;
+using Audio;
 
 namespace Player.State
 {
@@ -13,7 +14,7 @@ namespace Player.State
         private CharacterAudioSettings _characterAudioSettings;
         private PlayerSetting _playerSetting;
 
-        private IFootstepHandler _footstepHandler;
+        private IFootstepAudioHandler _footstepHandler;
         private IUserController _userController;
         private IMovement _movement;
         

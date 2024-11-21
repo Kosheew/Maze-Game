@@ -23,3 +23,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f0f794c67e9233d468a38d165590d253, type: 3}
   - {fileID: 8300000, guid: 1a7741daba5446e46a40f8074aae75dc, type: 3}
   - {fileID: 8300000, guid: 0bc66974c41ff8c4fa15f46d21ad3548, type: 3}
+  attackClip: {fileID: 8300000, guid: c5955b1ca51d47245ae5e5e10395d910, type: 3}

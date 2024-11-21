@@ -1,3 +1,4 @@
+using System;
 using InitGame.Audio;
 using InitGame.Level;
 using Characters;
@@ -118,4 +119,12 @@ public class Game : MonoBehaviour
         //   enemyStateManager.Init(_container);
     }
 
+
+    private void Update()
+    {
+        foreach (var enemy in enemies)
+        {
+            _stateEnemyManager?.UpdateState(enemy);
+        }
+    }
 }

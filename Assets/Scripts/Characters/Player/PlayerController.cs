@@ -3,7 +3,7 @@ using UnityEngine;
 using UserController;
 using Commands;
 using CharacterSettings;
-
+using Audio;
 
 namespace Characters.Player
 {
@@ -15,7 +15,7 @@ namespace Characters.Player
         public CharacterController Controller { get; private set; }
         public Camera CameraMain { get; private set; }
         public PlayerSetting PlayerSetting => playerSetting;
-        public IFootstepHandler FootstepHandler { get; private set; }
+        public IFootstepAudioHandler FootstepHandler { get; private set; }
         public IUserController UserController { get; private set; }
         public Transform TransformMain => transform;
 
@@ -31,7 +31,7 @@ namespace Characters.Player
             UserController = container.Resolve<IUserController>();
             CharacterAudioSettings = playerSetting.CharacterAudioSettings;
             
-            FootstepHandler = new FootstepHandler(audioSource, CharacterAudioSettings);
+            FootstepHandler = new FootstepAudioAudioHandler(audioSource, CharacterAudioSettings);
             CameraMain = Camera.main;
             
             _commandFactory.CreateMoveCommand(this);
