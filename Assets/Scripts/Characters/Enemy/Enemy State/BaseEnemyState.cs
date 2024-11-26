@@ -19,6 +19,23 @@ namespace Enemy.State
             return Vector3.Distance(enemy.MainPosition.position, target.position) <= range;
         }
 
+        protected virtual bool CanSeeTarget(IEnemy enemy, Transform target)
+        {
+            var setting = enemy.EnemySetting;
+            var directionToTarget = (target.position - enemy.EyesPosition.position).normalized;
+            var angleToTarget = Vector3.Angle(enemy.EyesPosition.forward, directionToTarget);
+
+            if (angleToTarget > setting.FieldOfViewAngle / 2f)
+                return false;
+
+            if (Physics.Raycast(enemy.EyesPosition.position, directionToTarget, out var hit, setting.VisionDistance, setting.VisionMask))
+            {
+                return hit.transform == target; 
+            }
+
+            return false;
+        }
+
         public abstract void EnterState(IEnemy enemy);
         public abstract void UpdateState(IEnemy enemy);
         public abstract void ExitState(IEnemy enemy);

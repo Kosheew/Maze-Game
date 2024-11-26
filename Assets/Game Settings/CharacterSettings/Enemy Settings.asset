@@ -19,3 +19,10 @@ MonoBehaviour:
   chaseDistance: 10
   attackDistance: 2
   attackCooldown: 1
+  visionDistance: 10
+  fieldOfViewAngle: 120
+  visionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  loseTargetDelay: 2
+  checkInterval: 0.2

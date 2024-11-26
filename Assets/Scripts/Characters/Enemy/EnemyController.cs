@@ -1,10 +1,10 @@
 using Audio;
-using Characters.Character_Interfaces;
 using Characters.Player;
 using CharacterSettings;
 using Commands;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 namespace Characters.Enemy
 {
@@ -16,7 +16,8 @@ namespace Characters.Enemy
         
         [SerializeField] private Transform[] patrolTargets;
         [SerializeField] private EnemySetting enemySetting;
-        [SerializeField] private EnemyVision vision;
+        
+        [SerializeField] private Transform eyesPosition; 
         
         private AudioSource AudioSource => GetComponent<AudioSource>();
         public NavMeshAgent Agent => GetComponent<NavMeshAgent>();
@@ -32,7 +33,7 @@ namespace Characters.Enemy
         private CharacterAudioSettings _characterAudioSettings;
         private Transform _currentTarget;
         public CommandEnemyFactory CommandEnemy { get; private set; }
-        public EnemyVision Vision => vision;
+        public Transform EyesPosition => eyesPosition;
 
 
         public void Inject(DependencyContainer container)
@@ -51,6 +52,15 @@ namespace Characters.Enemy
             CommandEnemy.CreatePatrolledCommand(this);
         }
 
+        public Coroutine StartTheCoroutine(IEnumerator routine)
+        {
+            return StartCoroutine(routine);
+        }
+
+        public void StopTheCoroutine(Coroutine routine)
+        {
+            StopCoroutine(routine);
+        }
 
     }
 }

@@ -2,7 +2,7 @@ using Characters.Character_Interfaces;
 using CharacterSettings;
 using Commands;
 using UnityEngine;
-using UnityEngine.AI;
+using System.Collections;
 
 namespace Characters.Enemy
 {
@@ -11,6 +11,9 @@ namespace Characters.Enemy
         public EnemySetting EnemySetting{ get;}
         public Transform MainPosition { get; }
         public CommandEnemyFactory CommandEnemy { get; }
-        public EnemyVision Vision { get; }
+        public Transform EyesPosition { get; }
+        
+        public Coroutine StartTheCoroutine(IEnumerator routine);
+        public void StopTheCoroutine(Coroutine routine);
     }
 }

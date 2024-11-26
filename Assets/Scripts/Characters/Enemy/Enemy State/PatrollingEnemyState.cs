@@ -20,7 +20,7 @@ namespace Enemy.State
 
         public override void UpdateState(IEnemy enemy)
         { 
-            if (enemy.Vision.CanSeeTarget(enemy.CurrentTarget))
+            if (CanSeeTarget(enemy, enemy.CurrentTarget))
             {
                 enemy.CommandEnemy.CreateChasingCommand(enemy);
                 return;
