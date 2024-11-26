@@ -89,7 +89,7 @@ public class Game : MonoBehaviour
         
         _container.Register(_commandEnemyFactory);
         _container.Register(_commandPlayerFactory);
-        _container.Register(player);
+        _container.Register<IPlayer>(player);
         
         //  _container.Register();
     }

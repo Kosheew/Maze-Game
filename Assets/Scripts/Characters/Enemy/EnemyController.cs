@@ -34,15 +34,14 @@ namespace Characters.Enemy
         private Transform _currentTarget;
         public CommandEnemyFactory CommandEnemy { get; private set; }
         public Transform EyesPosition => eyesPosition;
-
-
+        
         public void Inject(DependencyContainer container)
         {
             Agent.speed = enemySetting.MoveSpeed;
             
             _characterAudioSettings = enemySetting.CharacterAudioSettings;
+            _currentTarget = container.Resolve<IPlayer>().TransformMain;
             
-            _currentTarget = container.Resolve<PlayerController>().TransformMain;
             CommandEnemy = container.Resolve<CommandEnemyFactory>();
 
             FootstepHandler = new FootstepAudioAudioHandler(AudioSource, _characterAudioSettings);
