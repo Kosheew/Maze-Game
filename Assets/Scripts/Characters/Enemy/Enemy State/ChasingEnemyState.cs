@@ -15,7 +15,7 @@ namespace Enemy.State
 
         public override void UpdateState(IEnemy enemy)
         {
-            if (!IsTargetInRange(enemy, enemy.CurrentTarget, enemy.EnemySetting.ChaseDistance))
+            if (!enemy.Vision.CanSeeTarget(enemy.CurrentTarget))
             {
                 enemy.CommandEnemy.CreatePatrolledCommand(enemy);
                 return;

@@ -11,5 +11,6 @@ namespace Characters.Enemy
         public EnemySetting EnemySetting{ get;}
         public Transform MainPosition { get; }
         public CommandEnemyFactory CommandEnemy { get; }
+        public EnemyVision Vision { get; }
     }
 }

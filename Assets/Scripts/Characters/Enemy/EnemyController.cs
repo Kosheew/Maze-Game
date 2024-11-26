@@ -16,6 +16,7 @@ namespace Characters.Enemy
         
         [SerializeField] private Transform[] patrolTargets;
         [SerializeField] private EnemySetting enemySetting;
+        [SerializeField] private EnemyVision vision;
         
         private AudioSource AudioSource => GetComponent<AudioSource>();
         public NavMeshAgent Agent => GetComponent<NavMeshAgent>();
@@ -31,7 +32,8 @@ namespace Characters.Enemy
         private CharacterAudioSettings _characterAudioSettings;
         private Transform _currentTarget;
         public CommandEnemyFactory CommandEnemy { get; private set; }
-        
+        public EnemyVision Vision => vision;
+
 
         public void Inject(DependencyContainer container)
         {
