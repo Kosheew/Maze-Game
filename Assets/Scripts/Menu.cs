@@ -12,27 +12,24 @@ public class Menu: MonoBehaviour
 {
     [Header("UI Components")]
     [SerializeField] private UserInterface userInterface;
-        
-
-        
 
     [Header("UI Panels")]
     [SerializeField] private ViewPanels viewPanels;
         
     [Header("Game Completion")]
     [SerializeField] private GameCompleted gameCompleted;
-    
-    [Header("Enemy Manager")] 
-    [SerializeField] private EnemyController enemy;
 
     [Header("Audio Manager")]
     [SerializeField] private AudioManager audioManager;
+    
+    [SerializeField] private MainView mainView;
+    [SerializeField] private LoadingScene loadingScene;
     
     private CommandInvoker _commandInvoker;
     
     private ScoreController _scoreController;
     private DependencyContainer _container;
-    
+    private LoadingScene _loadingScene;
         
     private void Awake()
     {
@@ -40,7 +37,6 @@ public class Menu: MonoBehaviour
         _scoreController = new ScoreController();
         
         _commandInvoker = new CommandInvoker();
-        
         
         RegisterDependency();
             
@@ -52,7 +48,7 @@ public class Menu: MonoBehaviour
     private void RegisterDependency()
     {
         _container.Register(_commandInvoker);
-
+        _container.Register(_loadingScene);
     }
 
     private void Injection()
@@ -62,7 +58,8 @@ public class Menu: MonoBehaviour
         
     private void Init()
     {
-
+        var presenter = new MainPresenter(loadingScene);
+        mainView.Init(presenter);
     }
 
     
