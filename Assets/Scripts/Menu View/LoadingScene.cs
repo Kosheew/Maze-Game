@@ -15,13 +15,20 @@ public class LoadingScene : MonoBehaviour, ISceneLoader
     {
         var loadOperation = SceneManager.LoadSceneAsync(indexScene);
 
-        var progressValue = 0f;
-        loadSlider.value = progressValue;
+        float displayedProgress = 0f;
+        var targetProgress = 0f;
+        loadSlider.value = displayedProgress;
 
-        while (loadOperation is { isDone: false })
+        while (!loadOperation.isDone)
         {
-            progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
-            loadSlider.value = progressValue;
+            targetProgress = Mathf.Clamp01(loadOperation.progress / 0.9f);
+            
+            //while (displayedProgress < targetProgress)
+            {
+                displayedProgress = Mathf.MoveTowards(displayedProgress, targetProgress, Time.deltaTime); // Задаємо швидкість
+                loadSlider.value = displayedProgress;
+              //  yield return null; // Очікуємо наступного кадру
+            }
             yield return null;
         } 
     }

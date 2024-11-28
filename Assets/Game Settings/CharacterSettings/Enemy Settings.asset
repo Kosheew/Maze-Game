@@ -23,6 +23,6 @@ MonoBehaviour:
   fieldOfViewAngle: 120
   visionMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   loseTargetDelay: 2
   checkInterval: 0.2
