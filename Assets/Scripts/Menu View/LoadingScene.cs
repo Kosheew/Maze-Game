@@ -23,12 +23,9 @@ public class LoadingScene : MonoBehaviour, ISceneLoader
         {
             targetProgress = Mathf.Clamp01(loadOperation.progress / 0.9f);
             
-            //while (displayedProgress < targetProgress)
-            {
-                displayedProgress = Mathf.MoveTowards(displayedProgress, targetProgress, Time.deltaTime); // Задаємо швидкість
-                loadSlider.value = displayedProgress;
-              //  yield return null; // Очікуємо наступного кадру
-            }
+            displayedProgress = Mathf.MoveTowards(displayedProgress, targetProgress, Time.deltaTime); 
+            loadSlider.value = displayedProgress;
+            
             yield return null;
         } 
     }
