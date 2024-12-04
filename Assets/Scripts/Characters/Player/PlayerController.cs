@@ -7,6 +7,7 @@ using Audio;
 
 namespace Characters.Player
 {
+    [RequireComponent(typeof(CharacterTouch))]
     public class PlayerController : MonoBehaviour, IPlayer
     {
         [SerializeField] private PlayerSetting playerSetting;

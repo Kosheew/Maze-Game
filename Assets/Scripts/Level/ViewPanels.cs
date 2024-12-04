@@ -5,10 +5,7 @@ using UnityEngine.UI;
 
 namespace InitGame.Level
 {
-    /// <summary>
-    /// Manages the display of UI panels for game end and pause functionality.
-    /// Implements the IService and IDisposable interfaces for initialization and cleanup.
-    /// </summary>
+
     public class ViewPanels : MonoBehaviour
     {
         [SerializeField] private GameObject _endPanel; // Panel displayed when the game ends.
@@ -18,10 +15,7 @@ namespace InitGame.Level
 
     
         private bool _isGamePaused = false; // Tracks whether the game is currently paused.
-
-        /// <summary>
-        /// Initializes the ViewPanels by subscribing to game events and setting up the UI.
-        /// </summary>
+        
         public void Init()
         {
          

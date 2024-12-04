@@ -18,16 +18,12 @@ namespace InitGame.Level
         {
             while (true)
             {
-                _time += 1; // Increment the time by one second.
-
-                // Calculate minutes and seconds from the total time.
+                _time++; 
                 var seconds = _time % 60;
                 var minutes = _time / 60;
 
-                // Format the timer string as "MM : SS".
                 var timer = $"{minutes:00} : {seconds:00}";
-               // _viewPanels.
-                yield return new WaitForSeconds(1f); // Wait for one second before updating again.
+                yield return new WaitForSeconds(1f);
             }
         }
     }

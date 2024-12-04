@@ -5,13 +5,17 @@ using Characters;
 using Characters.Enemy;
 using Characters.Player;
 using Commands;
+using GameKeys;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UserController;
 
 public class Game : MonoBehaviour
 {
+    [FormerlySerializedAs("scoreView")]
+    [FormerlySerializedAs("userInterface")]
     [Header("UI Components")]
-    [SerializeField] private UserInterface userInterface;
+    [SerializeField] private WalletView walletView;
         
     [Header("Player Settings")]
     [SerializeField] private PlayerController player;
@@ -28,6 +32,9 @@ public class Game : MonoBehaviour
     [Header("Enemy Manager")] 
     [SerializeField] private EnemyController[] enemies;
 
+    [Header("Key Manager")] [SerializeField]
+    private Key[] keys;
+    
     [Header("Audio Manager")]
     [SerializeField] private AudioManager audioManager;
     
@@ -35,7 +42,7 @@ public class Game : MonoBehaviour
     
     private CommandInvoker _commandInvoker;
     
-    private ScoreController _scoreController;
+    private Wallet _wallet;
     private DependencyContainer _container;
     
     private StateEnemyManager _stateEnemyManager;
@@ -52,7 +59,7 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         _container = new DependencyContainer();
-        _scoreController = new ScoreController();
+        _wallet = new Wallet();
         _userController = new WindowsController();
         
         _commandInvoker = new CommandInvoker();
@@ -79,6 +86,9 @@ public class Game : MonoBehaviour
         
         _container.Register(_commandInvoker);
         
+        _container.Register(_wallet);
+        _container.Register(audioManager);
+        
         _container.Register(characterAudioSettings);
         
         _container.Register(_stateEnemyManager);
@@ -90,7 +100,7 @@ public class Game : MonoBehaviour
         _container.Register(_commandEnemyFactory);
         _container.Register(_commandPlayerFactory);
         _container.Register<IPlayer>(player);
-        
+            
         //  _container.Register();
     }
 
@@ -104,6 +114,11 @@ public class Game : MonoBehaviour
         foreach (var enemy in enemies)
         {
             enemy.Inject(_container);
+        }
+
+        foreach (var key in keys)
+        {
+            key.Inject(_container);
         }
     }
         
