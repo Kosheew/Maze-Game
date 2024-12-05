@@ -1,8 +1,8 @@
-using Characters.Character_Interfaces;
 using CharacterSettings;
 using Commands;
 using UnityEngine;
 using System.Collections;
+using Characters.Character_Interfaces;
 
 namespace Characters.Enemy
 {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Characters.Character_Interfaces
+namespace Characters
 {
     public interface IPatrolled
     {

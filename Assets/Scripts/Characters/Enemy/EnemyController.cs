@@ -1,11 +1,11 @@
-using Audio;
+using Characters;
 using Characters.Player;
 using CharacterSettings;
 using Commands;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
-
+using Audio;
 namespace Characters.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]

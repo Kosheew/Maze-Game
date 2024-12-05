@@ -1,7 +1,7 @@
 using UnityEngine;
-using Audio;
+using Characters;
 
-namespace Characters
+namespace Audio
 {
     public class FootstepAudioAudioHandler : BaseCharacterAudio, IFootstepAudioHandler
     {

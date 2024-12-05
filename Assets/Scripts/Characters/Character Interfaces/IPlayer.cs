@@ -1,8 +1,8 @@
 using UnityEngine;
 using UserController;
 using CharacterSettings;
+using Characters;
 using Audio;
-
 namespace Characters
 {
     public interface IPlayer

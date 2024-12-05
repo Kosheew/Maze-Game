@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InitGame.Audio
+namespace Characters
 {
     public class AudioManager : MonoBehaviour
     {

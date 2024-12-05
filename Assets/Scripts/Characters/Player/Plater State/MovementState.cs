@@ -1,7 +1,7 @@
 using UserController;
-using Characters;
 using UnityEngine;
 using CharacterSettings;
+using Characters;
 using Audio;
 
 namespace Player.State

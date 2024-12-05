@@ -1,8 +1,8 @@
 using UnityEngine;
-
 using UserController;
 using Commands;
 using CharacterSettings;
+using Characters;
 using Audio;
 
 namespace Characters.Player
@@ -19,13 +19,11 @@ namespace Characters.Player
         public IFootstepAudioHandler FootstepHandler { get; private set; }
         public IUserController UserController { get; private set; }
         public Transform TransformMain => transform;
-
-        private StatePlayerManager _statePlayerManager;
+        
         private CommandPlayerFactory _commandFactory;
         
         public void Inject(DependencyContainer container)
         {
-            _statePlayerManager = container.Resolve<StatePlayerManager>();
             _commandFactory = container.Resolve<CommandPlayerFactory>();
             
             Controller = GetComponent<CharacterController>();
@@ -36,13 +34,7 @@ namespace Characters.Player
             CameraMain = Camera.main;
             
             _commandFactory.CreateMoveCommand(this);
-            
-            Cursor.lockState = CursorLockMode.Locked;
         }
         
-        private void Update()
-        {
-            _statePlayerManager?.UpdateState(this);
-        }
     }
 }

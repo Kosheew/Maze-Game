@@ -1,15 +1,17 @@
 using System;
 using Wallet;
-using InitGame.Audio;
-using InitGame.Level;
 using Characters;
+using InitGame.Level;
 using Characters.Enemy;
 using Characters.Player;
 using Commands;
 using Keys;
+using Loader;
+using Scene_Manager;
 using Timer;
-using Unity.VisualScripting;
+using Paused;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UserController;
 
 public class Game : MonoBehaviour
@@ -17,18 +19,15 @@ public class Game : MonoBehaviour
     [Header("View Components")]
     [SerializeField] private WalletView walletView;
     [SerializeField] private TimerView timerView;
-        
+    [SerializeField] private PauseView pauseView;
+    [FormerlySerializedAs("loadingView")] [SerializeField] private LoaderView loaderView;
+    
     [Header("Player Settings")]
     [SerializeField] private PlayerController player;
         
-    /*[Header("Level Timer")]
-    [SerializeField] private Timer timeLevel;*/
-        
-    [Header("UI Panels")]
-    [SerializeField] private ViewPanels viewPanels;
-        
     [Header("Game Completion")]
     [SerializeField] private GameCompleted gameCompleted;
+    [FormerlySerializedAs("loadingScene")] [SerializeField] private SceneLoader sceneLoader;
     
     [Header("Enemy Manager")] 
     [SerializeField] private EnemyController[] enemies;
@@ -45,6 +44,7 @@ public class Game : MonoBehaviour
     
     private WalletModel _wallet;
     private TimerModel _timer;
+    private PauseModel _pause;
     
     private DependencyContainer _container;
     
@@ -57,14 +57,22 @@ public class Game : MonoBehaviour
     private CommandPlayerFactory _commandPlayerFactory;
     private CommandEnemyFactory _commandEnemyFactory;
     
+    private SceneController _sceneController;
+    
+    
+    
     private IUserController _userController;
         
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1f;
+        
         _container = new DependencyContainer();
         
         _wallet = new WalletModel(keys.Length);
         _timer = new TimerModel();
+        _pause = new PauseModel();
         
         _userController = new WindowsController();
         
@@ -78,6 +86,8 @@ public class Game : MonoBehaviour
         
         _commandEnemyFactory = new CommandEnemyFactory();
         _commandPlayerFactory = new CommandPlayerFactory();
+        
+        _sceneController = new SceneController(sceneLoader);
         
         RegisterDependency();
             
@@ -109,6 +119,9 @@ public class Game : MonoBehaviour
         _container.Register(_commandPlayerFactory);
         _container.Register<IPlayer>(player);
         
+        _container.Register(_sceneController);
+        _container.Register(_pause);
+        _container.Register(sceneLoader);
     }
 
     private void Injection()
@@ -127,6 +140,9 @@ public class Game : MonoBehaviour
         {
             key.Inject(_container);
         }
+        
+        pauseView.Inject(_container);
+        loaderView.Inject(_container);
     }
         
     private void Init()
@@ -145,14 +161,25 @@ public class Game : MonoBehaviour
     {
         new WalletController(_wallet, walletView);
         new TimerController(_timer, timerView);
+        
     }
 
 
     private void Update()
     {
+        _statePlayerManager.UpdateState(player);
         foreach (var enemy in enemies)
         {
             _stateEnemyManager?.UpdateState(enemy);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (_userController.IsPausing())
+        {
+            _pause.SetPaused();
+            _timer.StartTimer();
         }
     }
 
