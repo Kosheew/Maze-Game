@@ -14,7 +14,7 @@ public class Menu: MonoBehaviour
     [FormerlySerializedAs("scoreView")]
     [FormerlySerializedAs("userInterface")]
     [Header("UI Components")]
-    [SerializeField] private WalletView walletView;
+  //  [SerializeField] private WalletView walletView;
 
     [Header("UI Panels")]
     [SerializeField] private ViewPanels viewPanels;
@@ -30,7 +30,7 @@ public class Menu: MonoBehaviour
     
     private CommandInvoker _commandInvoker;
     
-    private Wallet _wallet;
+  //  private Wallet _wallet;
     private DependencyContainer _container;
     private LoadingScene _loadingScene;
         

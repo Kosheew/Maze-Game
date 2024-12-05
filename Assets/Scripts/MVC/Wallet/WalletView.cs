@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-namespace InitGame.Level
+namespace Wallet
 {
     public class WalletView : MonoBehaviour
     {
@@ -9,7 +9,7 @@ namespace InitGame.Level
         
         public void UpdateKeyText(int keyScore, int maxKeys)
         {
-            keyText.text = $"{keyScore}/ {maxKeys}";
+            keyText.SetText($"{keyScore} / {maxKeys}");
         }
     }
 }

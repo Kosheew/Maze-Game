@@ -1,27 +1,28 @@
 using System;
+using Wallet;
 using InitGame.Audio;
 using InitGame.Level;
 using Characters;
 using Characters.Enemy;
 using Characters.Player;
 using Commands;
-using GameKeys;
+using Keys;
+using Timer;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UserController;
 
 public class Game : MonoBehaviour
 {
-    [FormerlySerializedAs("scoreView")]
-    [FormerlySerializedAs("userInterface")]
-    [Header("UI Components")]
+    [Header("View Components")]
     [SerializeField] private WalletView walletView;
+    [SerializeField] private TimerView timerView;
         
     [Header("Player Settings")]
     [SerializeField] private PlayerController player;
         
-    [Header("Level Timer")]
-    [SerializeField] private Timer timeLevel;
+    /*[Header("Level Timer")]
+    [SerializeField] private Timer timeLevel;*/
         
     [Header("UI Panels")]
     [SerializeField] private ViewPanels viewPanels;
@@ -32,17 +33,19 @@ public class Game : MonoBehaviour
     [Header("Enemy Manager")] 
     [SerializeField] private EnemyController[] enemies;
 
-    [Header("Key Manager")] [SerializeField]
-    private Key[] keys;
+    [Header("Key Manager")] 
+    [SerializeField] private Key[] keys;
     
-    [Header("Audio Manager")]
+    [Header("Audio Settings")]
     [SerializeField] private AudioManager audioManager;
     
     [SerializeField] private CharacterAudioSettings characterAudioSettings;
     
     private CommandInvoker _commandInvoker;
     
-    private Wallet _wallet;
+    private WalletModel _wallet;
+    private TimerModel _timer;
+    
     private DependencyContainer _container;
     
     private StateEnemyManager _stateEnemyManager;
@@ -59,7 +62,10 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         _container = new DependencyContainer();
-        _wallet = new Wallet(keys.Length);
+        
+        _wallet = new WalletModel(keys.Length);
+        _timer = new TimerModel();
+        
         _userController = new WindowsController();
         
         _commandInvoker = new CommandInvoker();
@@ -78,6 +84,8 @@ public class Game : MonoBehaviour
         Injection();
             
         Init();
+        
+        InitView();
     }
 
     private void RegisterDependency()
@@ -100,8 +108,7 @@ public class Game : MonoBehaviour
         _container.Register(_commandEnemyFactory);
         _container.Register(_commandPlayerFactory);
         _container.Register<IPlayer>(player);
-            
-        //  _container.Register();
+        
     }
 
     private void Injection()
@@ -124,7 +131,7 @@ public class Game : MonoBehaviour
         
     private void Init()
     {
-        //    audioManager.Init();
+           audioManager.Init();
         //    gameCompleted.Init();
         //   _scoreController.Init();
         //   userInterface.Init();
@@ -134,6 +141,12 @@ public class Game : MonoBehaviour
         //   enemyStateManager.Init(_container);
     }
 
+    private void InitView()
+    {
+        new WalletController(_wallet, walletView);
+        new TimerController(_timer, timerView);
+    }
+
 
     private void Update()
     {
@@ -141,5 +154,10 @@ public class Game : MonoBehaviour
         {
             _stateEnemyManager?.UpdateState(enemy);
         }
+    }
+
+    private void OnDestroy()
+    {
+        _timer.StopTimer();
     }
 }

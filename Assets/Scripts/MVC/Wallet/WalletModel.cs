@@ -1,15 +1,15 @@
 using System;
 
-namespace InitGame.Level
+namespace Wallet
 {
-    public class Wallet
+    public class WalletModel
     {
         private int _countKey;
         private int _maxKeys;
 
         public event Action<int, int> OnKeyCountChanged;
 
-        public Wallet(int maxKeys)
+        public WalletModel(int maxKeys)
         {
             _maxKeys = maxKeys;
         }

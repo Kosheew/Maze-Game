@@ -15,7 +15,7 @@ namespace InitGame.Audio
         {
             if (clip != null && _audioSource != null)
             {
-                _audioSource.PlayOneShot(clip); // Play the sound
+                _audioSource.PlayOneShot(clip);
             }
         }
     }

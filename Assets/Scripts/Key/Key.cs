@@ -1,19 +1,18 @@
 using InitGame.Audio;
-using InitGame.Level;
+using Wallet;
 using UnityEngine;
 
-namespace GameKeys 
+namespace Keys 
 {
-    
     public class Key : MonoBehaviour, ITouching
     {
         [SerializeField] private AudioClip _pickUpSound;
         private AudioManager _audioManager;
-        private Wallet _wallet;
+        private WalletModel _wallet;
         
         public void Inject(DependencyContainer container)
         {
-            _wallet = container.Resolve<Wallet>();
+            _wallet = container.Resolve<WalletModel>();
             _audioManager = container.Resolve<AudioManager>();
         }
         
