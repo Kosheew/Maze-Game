@@ -59,7 +59,7 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         _container = new DependencyContainer();
-        _wallet = new Wallet();
+        _wallet = new Wallet(keys.Length);
         _userController = new WindowsController();
         
         _commandInvoker = new CommandInvoker();

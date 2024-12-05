@@ -37,7 +37,7 @@ public class Menu: MonoBehaviour
     private void Awake()
     {
         _container = new DependencyContainer();
-        _wallet = new Wallet();
+     //   _wallet = new Wallet();
         
         _commandInvoker = new CommandInvoker();
         
