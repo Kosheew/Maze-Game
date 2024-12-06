@@ -172,6 +172,8 @@ public class Game : MonoBehaviour
         {
             _stateEnemyManager?.UpdateState(enemy);
         }
+        
+        _timer.UpdateTimer(Time.deltaTime);
     }
 
     private void LateUpdate()

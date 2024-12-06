@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 namespace Wallet
@@ -6,10 +7,13 @@ namespace Wallet
     public class WalletView : MonoBehaviour
     {
         [SerializeField] private TMP_Text keyText;
+        [SerializeField] private Slider keySlider; 
         
         public void UpdateKeyText(int keyScore, int maxKeys)
         {
-            keyText.SetText($"{keyScore} / {maxKeys}");
+            keySlider.maxValue = maxKeys;
+            keySlider.value = keyScore;
+            keyText.SetText($"{keyScore}");
         }
     }
 }

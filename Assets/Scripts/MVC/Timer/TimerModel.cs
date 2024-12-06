@@ -1,33 +1,37 @@
 using System;
 using System.Threading;
+using UnityEngine;
 
 namespace Timer
 {
-    public class TimerModel
+     public class TimerModel
     {
-        private readonly System.Timers.Timer _timer;
-        private int _time = 0;
-        private readonly SynchronizationContext _context;
+        private float _time = 0f;
+        public bool IsRunning { get; private set; }
         public event Action<int> OnTimeChanged;
 
-        public TimerModel()
+        public void StartTimer()
         {
-            _context = SynchronizationContext.Current; 
-            _timer = new System.Timers.Timer(1000);
-            _timer.Elapsed += (sender, args) =>
-            {
-                _time++;
-                _context.Post(_ => OnTimeChanged?.Invoke(_time), null); 
-            };
+            IsRunning = true;
         }
 
-        public void StartTimer() => _timer.Start();
-        public void StopTimer() => _timer.Stop();
-        
+        public void StopTimer()
+        {
+            IsRunning = false;
+        }
+
         public void ResetTimer()
         {
-            _time = 0;
-            _context.Post(_ => OnTimeChanged?.Invoke(_time), null);
+            _time = 0f;
+            OnTimeChanged?.Invoke(0);
+        }
+
+        public void UpdateTimer(float deltaTime)
+        {
+            if (!IsRunning) return;
+
+            _time += deltaTime;
+            OnTimeChanged?.Invoke(Mathf.FloorToInt(_time));
         }
     }
 }
