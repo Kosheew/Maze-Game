@@ -14,5 +14,6 @@ namespace Characters
         public IUserController UserController { get; }
         public IFootstepAudioHandler FootstepHandler { get; }
         public Transform TransformMain { get; }
+        public bool Alive { get; set; }
     }
 }

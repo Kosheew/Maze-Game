@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UserController;
 using Commands;
@@ -20,6 +21,8 @@ namespace Characters.Player
         public IUserController UserController { get; private set; }
         public Transform TransformMain => transform;
         
+        public bool Alive { get; set; }
+        
         private CommandPlayerFactory _commandFactory;
         
         public void Inject(DependencyContainer container)
@@ -35,6 +38,13 @@ namespace Characters.Player
             
             _commandFactory.CreateMoveCommand(this);
         }
-        
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.TryGetComponent(out Weapon weapon))
+            {
+                _commandFactory.CreateDeadCommand(this);
+            }
+        }
     }
 }

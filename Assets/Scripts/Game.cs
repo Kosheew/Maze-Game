@@ -34,6 +34,9 @@ public class Game : MonoBehaviour
 
     [Header("Key Manager")] 
     [SerializeField] private Key[] keys;
+
+    [Header("Weapons")] 
+    [SerializeField] private Weapon[] weapons;
     
     [Header("Audio Settings")]
     [SerializeField] private AudioManager audioManager;
@@ -147,14 +150,12 @@ public class Game : MonoBehaviour
         
     private void Init()
     {
-           audioManager.Init();
-        //    gameCompleted.Init();
-        //   _scoreController.Init();
-        //   userInterface.Init();
-       // player.Inject(_container);
-        // timeLevel.Init(_container);
-        //   viewPanels.Init();
-        //   enemyStateManager.Init(_container);
+        audioManager.Init();
+
+        foreach (var weapon in weapons)
+        {
+            weapon.Init();
+        }
     }
 
     private void InitView()
@@ -178,7 +179,7 @@ public class Game : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_userController.IsPausing())
+        if (_userController.IsPausing() && !player.Alive)
         {
             _pause.SetPaused();
             _timer.StartTimer();

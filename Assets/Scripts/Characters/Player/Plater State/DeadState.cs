@@ -9,17 +9,17 @@ namespace Player.State
     {
         public void EnterState(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            player.Alive = false;
         }
 
         public void UpdateState(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Death");
         }
 
         public void ExitState(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            player.Alive = true;
         }
     }
 }

@@ -14,15 +14,18 @@ namespace Enemy.State
             enemy.MainPosition.rotation = Quaternion.Slerp(enemy.MainPosition.rotation, lookRotation, Time.deltaTime * 5);
         }
 
-        protected virtual bool IsTargetInRange(IEnemy enemy, Transform target, float range)
+        protected virtual bool IsTargetInRange(IEnemy enemy, IPlayer player, float range)
         {
-            return Vector3.Distance(enemy.MainPosition.position, target.position) <= range;
+            if (!player.Alive) return false;
+            return Vector3.Distance(enemy.MainPosition.position, player.TransformMain.position) <= range;
         }
 
-        protected virtual bool CanSeeTarget(IEnemy enemy, Transform target)
+        protected virtual bool CanSeeTarget(IEnemy enemy, IPlayer player)
         {
+            if (!player.Alive) return false;
+            
             var setting = enemy.EnemySetting;
-            var directionToTarget = (target.position - enemy.EyesPosition.position).normalized;
+            var directionToTarget = (player.TransformMain.position - enemy.EyesPosition.position).normalized;
             var angleToTarget = Vector3.Angle(enemy.EyesPosition.forward, directionToTarget);
 
             if (angleToTarget > setting.FieldOfViewAngle / 2f)
@@ -30,7 +33,7 @@ namespace Enemy.State
 
             if (Physics.Raycast(enemy.EyesPosition.position, directionToTarget, out var hit, setting.VisionDistance, setting.VisionMask))
             {
-                return hit.transform == target; 
+                return hit.transform == player.TransformMain; 
             }
 
             return false;

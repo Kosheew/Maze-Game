@@ -20,6 +20,8 @@ namespace Player.State
         
         public void EnterState(IPlayer player)
         {
+            player.Alive = true;
+            
             _playerSetting = player.PlayerSetting;
             _characterController = player.Controller; 
             _userController = player.UserController;
@@ -54,7 +56,7 @@ namespace Player.State
 
         public void ExitState(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         private bool IsMoving(Vector3 velocity)

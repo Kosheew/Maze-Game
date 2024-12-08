@@ -16,13 +16,13 @@ namespace Enemy.State
 
         public override void UpdateState(IEnemy enemy)
         {
-            if (!IsTargetInRange(enemy, enemy.CurrentTarget, enemy.EnemySetting.AttackDistance))
+            if (!IsTargetInRange(enemy, enemy.TargetPlayer, enemy.EnemySetting.AttackDistance))
             {
                 enemy.CommandEnemy.CreateChasingCommand(enemy);
                 return;
             }
 
-            RotateTowards(enemy, enemy.CurrentTarget);
+            RotateTowards(enemy, enemy.TargetPlayer.TransformMain);
 
             if (Time.time >= _nextAttackTime)
             {

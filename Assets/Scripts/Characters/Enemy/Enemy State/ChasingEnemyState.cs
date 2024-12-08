@@ -15,7 +15,7 @@ namespace Enemy.State
         public override void EnterState(IEnemy enemy)
         {
             enemy.Agent.isStopped = false;
-            _currentTarget = enemy.CurrentTarget;
+            _currentTarget = enemy.TargetPlayer.TransformMain;
             _isTargetVisible = true;
             _loseTargetTimer = enemy.EnemySetting.LoseTargetDelay;
             
@@ -30,7 +30,7 @@ namespace Enemy.State
                 return;
             }
             
-            if (IsTargetInRange(enemy, enemy.CurrentTarget, enemy.EnemySetting.AttackDistance))
+            if (IsTargetInRange(enemy, enemy.TargetPlayer, enemy.EnemySetting.AttackDistance))
             {
                 enemy.CommandEnemy.CreateAttackCommand(enemy);
                 return;
@@ -38,7 +38,7 @@ namespace Enemy.State
             
             enemy.CharacterAnimator.Running(enemy.Agent.velocity.magnitude);
             enemy.FootstepHandler.PlayFootstepSound();
-            enemy.Agent.SetDestination(enemy.CurrentTarget.position);
+            enemy.Agent.SetDestination(_currentTarget.position);
 
 
         }
@@ -54,7 +54,7 @@ namespace Enemy.State
         {
             while (_currentTarget != null)
             {
-                if (CanSeeTarget(enemy, _currentTarget))
+                if (CanSeeTarget(enemy, enemy.TargetPlayer))
                 {
                     _isTargetVisible = true;
                     _loseTargetTimer = enemy.EnemySetting.LoseTargetDelay;

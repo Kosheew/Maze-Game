@@ -3,6 +3,6 @@ namespace Characters.Character_Interfaces
 {
     public interface ITargetHandler
     {
-        Transform CurrentTarget { get; }
+        IPlayer TargetPlayer { get; }
     }
 }

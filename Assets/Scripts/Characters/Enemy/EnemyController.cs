@@ -17,21 +17,23 @@ namespace Characters.Enemy
         [SerializeField] private Transform[] patrolTargets;
         [SerializeField] private EnemySetting enemySetting;
         
-        [SerializeField] private Transform eyesPosition; 
+        [SerializeField] private Transform eyesPosition;
+
+        [SerializeField] private Weapon weapon;
         
         private AudioSource AudioSource => GetComponent<AudioSource>();
         public NavMeshAgent Agent => GetComponent<NavMeshAgent>();
         private Animator Animator => GetComponent<Animator>();
         public EnemySetting EnemySetting => enemySetting;
         public Transform[] PatrolTargets => patrolTargets;
-        public Transform CurrentTarget => _currentTarget;
+
         public CharacterAnimator CharacterAnimator { get; private set; }
         public IFootstepAudioHandler FootstepHandler { get; private set; }
+        public IPlayer TargetPlayer { get; private set; }
         public AttackAudioHandler AttackAudio { get; private set; }
         public Transform MainPosition => transform;
 
         private CharacterAudioSettings _characterAudioSettings;
-        private Transform _currentTarget;
         public CommandEnemyFactory CommandEnemy { get; private set; }
         public Transform EyesPosition => eyesPosition;
         
@@ -40,7 +42,7 @@ namespace Characters.Enemy
             Agent.speed = enemySetting.MoveSpeed;
             
             _characterAudioSettings = enemySetting.CharacterAudioSettings;
-            _currentTarget = container.Resolve<IPlayer>().TransformMain;
+            TargetPlayer = container.Resolve<IPlayer>();
             
             CommandEnemy = container.Resolve<CommandEnemyFactory>();
 
@@ -60,6 +62,16 @@ namespace Characters.Enemy
         {
             StopCoroutine(routine);
         }
+        
+        public void ActiveWeapon()
+        {
+            weapon.ActiveCollider();
+        }
 
+        public void DeactiveWeapon()
+        {
+            weapon.DeactiveCollider();
+        }
+        
     }
 }
