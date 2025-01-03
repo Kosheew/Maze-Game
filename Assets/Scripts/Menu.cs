@@ -22,7 +22,6 @@ public class Menu: MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         _container = new DependencyContainer();
         
-        
         RegisterDependency();
             
         Injection();

@@ -1,10 +1,11 @@
 using Scene_Manager;
 using Loader;
+using UnityEngine;
 
 public class MenuPresenter
 {
     private readonly SceneLoader _sceneLoader;
-    private SceneController _sceneController;
+    private readonly SceneController _sceneController;
     
     public MenuPresenter(SceneLoader sceneLoader, SceneController sceneController)
     {
@@ -19,6 +20,6 @@ public class MenuPresenter
 
     public void QuitGame()
     {
-        _sceneController.QuitGame();
+        Application.Quit();
     }
 }

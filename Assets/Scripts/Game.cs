@@ -179,10 +179,16 @@ public class Game : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_userController.IsPausing() && !player.Alive)
+        if (_userController.IsPausing())
         {
             _pause.SetPaused();
             _timer.StartTimer();
+        }
+
+        if (!player.Alive)
+        {
+            _timer.StopTimer();
+            Time.timeScale = 0f;
         }
     }
 
